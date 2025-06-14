@@ -3,7 +3,7 @@ from .main import main
 from .about import about
 from .help import help
 from .settings import settings
-from .user import sign_up, create_user, sign_in, authenticate, sign_out, show_user, edit_user, update_user
+from .user import sign_up, create_user, sign_in, authenticate, sign_out, show_user, edit_user, update_user, get_user_qrcode
 
 def set_routes(app):
     app.add_url_rule(
@@ -76,4 +76,10 @@ def set_routes(app):
         rule = "/usuario/<uuid:user_id>/actualizar",
         view_func = update_user,
         methods=["POST"]
+    )
+
+    app.add_url_rule(
+        rule = "/usuario/<uuid:user_id>/qr",
+        view_func = get_user_qrcode,
+        methods=["GET"]
     )
