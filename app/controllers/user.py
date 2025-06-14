@@ -2,10 +2,19 @@
 from flask import render_template, abort
 from app.models import User
 
-def new_user():
+def sign_up():
     return render_template("create_user.html")
 
 def create_user():
+    pass
+
+def sign_in():
+    pass
+
+def authenticate():
+    pass
+
+def sign_out():
     pass
 
 def show_user(user_id):
@@ -15,9 +24,6 @@ def show_user(user_id):
         abort(404)
     
     return render_template("show_user.html", user=user)
-
-def request_edit_user(user_id):
-    pass
 
 def edit_user(user_id):
     pass

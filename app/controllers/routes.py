@@ -3,47 +3,75 @@ from .main import main
 from .about import about
 from .help import help
 from .settings import settings
-from .user import new_user, create_user, show_user, request_edit_user, edit_user, update_user
+from .user import sign_up, create_user, sign_in, authenticate, sign_out, show_user, edit_user, update_user
 
 def set_routes(app):
     app.add_url_rule(
         rule = "/",
-        view_func = main
+        view_func = main,
+        methods=["GET"]
     )
+
     app.add_url_rule(
         rule = "/ayuda",
-        view_func = help
+        view_func = help,
+        methods=["GET"]
     )
+
     app.add_url_rule(
         rule = "/nosotros",
-        view_func = about
+        view_func = about,
+        methods=["GET"]
     )
+
     app.add_url_rule(
         rule = "/configuraciones",
-        view_func = settings
+        view_func = settings,
+        methods=["GET"]
     )
+
     app.add_url_rule(
         rule = "/usuario/registrar",
-        view_func = new_user
+        view_func = sign_up,
+        methods=["GET"]
     )
+
     app.add_url_rule(
-        rule = "/usuario/crear",
+        rule = "/usuario/registrar",
         view_func = create_user,
         methods=["POST"]
     )
+
     app.add_url_rule(
-        rule = "/usuario/<uuid:user_id>",
-        view_func = show_user
+        rule = "/usuario/iniciar_sesion",
+        view_func = sign_in,
+        methods=["GET"]
     )
+
     app.add_url_rule(
-        rule = "/usuario/<uuid:user_id>/solicitar_editar",
-        view_func = request_edit_user,
+        rule = "/usuario/iniciar_sesion",
+        view_func = authenticate,
         methods=["POST"]
     )
+
     app.add_url_rule(
-        rule = "/usuario/<uuid:user_id>/editar",
-        view_func = edit_user
+        rule = "/usuario/cerrar_sesion",
+        view_func = sign_out,
+        methods=["GET"]
     )
+
+    app.add_url_rule(
+        rule = "/usuario/<uuid:user_id>",
+        view_func = show_user,
+        methods=["GET"]
+    )
+
+    app.add_url_rule(
+        rule = "/usuario/<uuid:user_id>/actualizar",
+        view_func = edit_user,
+        methods=["GET"]
+    )
+    
     app.add_url_rule(
         rule = "/usuario/<uuid:user_id>/actualizar",
         view_func = update_user,

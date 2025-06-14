@@ -33,7 +33,7 @@
     <p>Escanea un código QR o ingrese un identificador</p>
 
     <div class="d-flex flex-column flex-md-row gap-3">
-      <a href="{{ url_for('new_user') }}" class="btn btn-primary btn-lg" role="button">Registrarse</a>
+      <a href="{{ url_for('sign_up') }}" class="btn btn-primary btn-lg" role="button">Registrarse</a>
 
       <form action="/procesar-uuid" method="get" class="d-flex align-items-center">
         <label for="uuid-input" class="visually-hidden">UUID</label>
