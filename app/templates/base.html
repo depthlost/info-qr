@@ -37,6 +37,7 @@
                         <a href="{{ url_for('sign_up') }}" class="btn btn-primary" role="button">Registrarse</a>
                     {% else %}
                         <a href="{{ url_for('sign_out') }}" class="btn btn-outline-secondary" role="button">Cerrar Sesión</a>
+                        <a href="{{ url_for('show_user', user_id=get_authenticated_user_id()) }}" class="btn btn-primary" role="button">Perfil</a>
                     {% endif %}
                 </div>
                 </div>
