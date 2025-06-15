@@ -1,12 +1,15 @@
 
 import uuid
+from sqlalchemy import String, Text
 from sqlalchemy.orm import Mapped, mapped_column
 from app.database import db
 
 class User(db.Model):
     id: Mapped[uuid.UUID] = mapped_column(primary_key=True, default=uuid.uuid4)
-    name: Mapped[str] = mapped_column(unique=True)
-    email: Mapped[str]
+    name: Mapped[str] = mapped_column(String(64))
+    surname: Mapped[str] = mapped_column(String(64))
+    email: Mapped[str] = mapped_column(String(128), unique=True)
+    password: Mapped[str] = mapped_column(String(256))
 
     def create(self):
         db.session.add(self)

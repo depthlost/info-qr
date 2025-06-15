@@ -6,15 +6,17 @@
     <main class="container py-5">
         <h1 class="mb-4">Registro de Usuario</h1>
 
-        <form class="needs-validation" novalidate>
+        <form action="{{ url_for('create_user') }}" method="post">
+            {{ form.hidden_tag() }}
+
             <div class="row g-3">
             <div class="col-md-6">
-                <label for="firstName" class="form-label">Nombre</label>
+                <label for="name" class="form-label">Nombre</label>
                 <input
                 type="text"
                 class="form-control"
-                id="firstName"
-                name="firstName"
+                id="name"
+                name="name"
                 placeholder="Ej: María"
                 required
                 aria-required="true"
@@ -25,12 +27,12 @@
             </div>
 
             <div class="col-md-6">
-                <label for="lastName" class="form-label">Apellido</label>
+                <label for="surname" class="form-label">Apellido</label>
                 <input
                 type="text"
                 class="form-control"
-                id="lastName"
-                name="lastName"
+                id="surname"
+                name="surname"
                 placeholder="Ej: González"
                 required
                 aria-required="true"
@@ -84,7 +86,6 @@
                     type="password"
                     class="form-control"
                     id="confirmPassword"
-                    name="confirmPassword"
                     placeholder="Repite la contraseña"
                     required
                     aria-required="true"
