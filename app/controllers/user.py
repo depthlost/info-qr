@@ -23,6 +23,8 @@ def create_user():
         password=generate_password_hash(form.password.data)
     )
     user.create()
+    
+    login_user(user)
 
     return redirect(url_for("show_user", user_id=user.id))
 
