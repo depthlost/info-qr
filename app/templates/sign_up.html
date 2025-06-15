@@ -2,107 +2,105 @@
 
 {% block title %}Info QR - Registro{% endblock %}
 
-{% block body %}
-    <main class="container py-5">
-        <h1 class="mb-4">Registro de Usuario</h1>
+{% block body_content %}
+    <h1 class="mb-4">Registro de Usuario</h1>
 
-        <form action="{{ url_for('create_user') }}" method="post">
-            {{ form.hidden_tag() }}
+    <form action="{{ url_for('create_user') }}" method="post">
+        {{ form.hidden_tag() }}
 
+        <div class="row g-3">
+        <div class="col-md-6">
+            <label for="name" class="form-label">Nombre*</label>
+            <input
+            type="text"
+            class="form-control"
+            id="name"
+            name="name"
+            placeholder="Ejemplo: María"
+            required
+            aria-required="true"
+            />
+            <div class="invalid-feedback">
+            Por favor ingresa tu nombre.
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <label for="surname" class="form-label">Apellido*</label>
+            <input
+            type="text"
+            class="form-control"
+            id="surname"
+            name="surname"
+            placeholder="Ejemplo: González"
+            required
+            aria-required="true"
+            />
+            <div class="invalid-feedback">
+            Por favor ingresa tu apellido.
+            </div>
+        </div>
+
+        <div class="col-12">
+            <label for="email" class="form-label">Correo Electrónico*</label>
+            <input
+            type="email"
+            class="form-control"
+            id="email"
+            name="email"
+            placeholder="Ejemplo: mariagonzalez@gmail.com"
+            required
+            aria-required="true"
+            />
+            <div class="invalid-feedback">
+            Por favor ingresa un correo electrónico válido.
+            </div>
+        </div>
+
+        <fieldset class="col-12">
+            <legend class="form-label">Contraseña</legend>
             <div class="row g-3">
             <div class="col-md-6">
-                <label for="name" class="form-label">Nombre</label>
+                <label for="password" class="form-label">Contraseña*</label>
                 <input
-                type="text"
+                type="password"
                 class="form-control"
-                id="name"
-                name="name"
-                placeholder="Ej: María"
+                id="password"
+                name="password"
+                minlength="8"
+                placeholder="Mínimo 8 caracteres"
                 required
                 aria-required="true"
                 />
+                <div class="form-text">
+                Tu contraseña debe tener al menos 8 caracteres.
+                </div>
                 <div class="invalid-feedback">
-                Por favor ingresa tu nombre.
+                La contraseña debe tener al menos 8 caracteres.
                 </div>
             </div>
-
             <div class="col-md-6">
-                <label for="surname" class="form-label">Apellido</label>
+                <label for="confirmPassword" class="form-label">Repetir Contraseña*</label>
                 <input
-                type="text"
+                type="password"
                 class="form-control"
-                id="surname"
-                name="surname"
-                placeholder="Ej: González"
+                id="confirmPassword"
+                placeholder="Repite la contraseña"
                 required
                 aria-required="true"
                 />
-                <div class="invalid-feedback">
-                Por favor ingresa tu apellido.
+                <div class="invalid-feedback" id="confirmFeedback">
+                Las contraseñas no coinciden.
                 </div>
             </div>
-
-            <div class="col-12">
-                <label for="email" class="form-label">Correo Electrónico</label>
-                <input
-                type="email"
-                class="form-control"
-                id="email"
-                name="email"
-                placeholder="nombre@ejemplo.com"
-                required
-                aria-required="true"
-                />
-                <div class="invalid-feedback">
-                Por favor ingresa un correo electrónico válido.
-                </div>
             </div>
+        </fieldset>
+        </div>
 
-            <fieldset class="col-12">
-                <legend class="form-label">Contraseña</legend>
-                <div class="row g-3">
-                <div class="col-md-6">
-                    <label for="password" class="form-label">Contraseña</label>
-                    <input
-                    type="password"
-                    class="form-control"
-                    id="password"
-                    name="password"
-                    minlength="8"
-                    placeholder="Mínimo 8 caracteres"
-                    required
-                    aria-required="true"
-                    />
-                    <div class="form-text">
-                    Tu contraseña debe tener al menos 8 caracteres.
-                    </div>
-                    <div class="invalid-feedback">
-                    La contraseña debe tener al menos 8 caracteres.
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <label for="confirmPassword" class="form-label">Repetir Contraseña</label>
-                    <input
-                    type="password"
-                    class="form-control"
-                    id="confirmPassword"
-                    placeholder="Repite la contraseña"
-                    required
-                    aria-required="true"
-                    />
-                    <div class="invalid-feedback" id="confirmFeedback">
-                    Las contraseñas no coinciden.
-                    </div>
-                </div>
-                </div>
-            </fieldset>
-            </div>
+        <hr class="my-4" />
 
-            <hr class="my-4" />
-
-            <button class="btn btn-primary btn-lg" type="submit">
-            Registrarse
-            </button>
-        </form>
-    </main>
+        <button class="btn btn-primary btn-lg" type="submit">
+        Registrarse
+        </button>
+    </form>
 {% endblock %}

@@ -1,3 +1,5 @@
 
+from flask import render_template
+
 def about():
-    pass
+    return render_template("about.html")

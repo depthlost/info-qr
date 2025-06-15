@@ -1,3 +1,5 @@
 
+from flask import render_template
+
 def help():
-    pass
+    return render_template("help.html")

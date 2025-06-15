@@ -2,10 +2,8 @@
 
 {% block title %}Info QR - Iniciar Sesión{% endblock %}
 
-{% block body %}
-    <div class="container" style="padding-top: 80px;max-width: 400px;">
-
-    <form action="{{ url_for('authenticate') }}" method="post" class="border rounded shadow-sm p-4 bg-white">
+{% block body_content %}
+    <form action="{{ url_for('authenticate') }}" method="post">
         {{ form.hidden_tag() }}
         
         <div class="form-group">
@@ -25,6 +23,4 @@
             Las credenciales no son válidas.
         </div>
     {% endif %}
-
-    </div>
 {% endblock %}

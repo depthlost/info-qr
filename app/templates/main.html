@@ -2,47 +2,28 @@
 
 {% block title %}Info QR{% endblock %}
 
-{% block body %}
-  <a class="visually-hidden-focusable" href="#main-content">Saltar al contenido</a>
-
-  <nav class="navbar navbar-expand-sm navbar-light bg-light" role="navigation" aria-label="Menú principal">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="#">Info QR</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Mostrar menú">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <button id="themeToggle" class="btn btn-outline-secondary">🌙</button>
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item">
-            <a class="nav-link" href="/configuracion" role="menuitem">Configuración</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/ayuda" role="menuitem">Ayuda</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/acerca-de" role="menuitem">Acerca de</a>
-          </li>
-        </ul>
-      </div>
+{% block body_content %}
+    <h1 class="display-5">¡Bienvenid@ a InfoQR!</h1>
+    <p class="lead">Esta aplicación te permite obtener información sobre una persona para brindarle ayuda, de forma rápida y práctica mediante el escaneo de un código QR o ingresando un identificador único.</p>
+    
+    <div class="text-center mt-4">
+        <a href="#" class="btn btn-success btn-lg" role="button" aria-label="Escanear código QR">
+            <i class="bi bi-qr-code-scan me-2" aria-hidden="true"></i>Escanear Código QR
+        </a>
     </div>
-  </nav>
-
-  <main id="main-content" class="container my-5" role="main">
-    <h1 class="mb-4">Bienvenido a Info QR</h1>
-    <p>Escanea un código QR o ingrese un identificador</p>
-
-    <div class="d-flex flex-column flex-md-row gap-3">
-      <a href="{{ url_for('sign_up') }}" class="btn btn-primary btn-lg" role="button">Registrarse</a>
-
-      <form action="/procesar-uuid" method="get" class="d-flex align-items-center">
-        <label for="uuid-input" class="visually-hidden">UUID</label>
-        <div class="input-group">
-          <input type="text" id="uuid-input" name="uuid" class="form-control" placeholder="Ingresar UUID" aria-label="Ingresar UUID">
-          <button type="submit" class="btn btn-success" aria-label="Enviar UUID">Enviar</button>
-          <button type="button" id="scan-qr-btn" class="btn btn-success" aria-label="Escanear código QR">Escanear QR</button>
+    
+    <hr class="my-4">
+    
+    <form class="row g-3 justify-content-around" role="search" aria-label="Formulario para buscar por identificador">
+        <div class="col-md-6">
+            <label for="identifier" class="form-label">Ingresar Identificador</label>
+            <input type="text" id="identifier" name="identifier" class="form-control" placeholder="Ejemplo: fb22d174-f2d7-42e2-abf7-72e2c7118c6d" aria-describedby="identifierHelp">
+            <div id="identifierHelp" class="form-text">
+                Introduce un identificador único para buscar la información.
+            </div>
         </div>
-      </form>
-    </div>
-  </main>
+        <div class="col-md-3 align-self-center">
+            <button type="submit" class="btn btn-outline-primary w-100" aria-label="Buscar identificador">Buscar</button>
+        </div>
+    </form>
 {% endblock %}
