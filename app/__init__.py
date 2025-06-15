@@ -5,6 +5,7 @@ from flask import Flask
 from app.config import Config
 from app.controllers import routes
 from app import database
+from app.session import user_is_authenticated
 
 
 def create_app():
@@ -15,5 +16,7 @@ def create_app():
     
     routes.set_routes(app)
     database.set_database(app)
+
+    app.jinja_env.globals.update(user_is_authenticated=user_is_authenticated)
 
     return app

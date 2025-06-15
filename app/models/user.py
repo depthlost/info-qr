@@ -35,3 +35,7 @@ class User(db.Model):
     def get(self, id):
         return self.query.get(id)
     
+    @classmethod
+    def get_by_email(self, email):
+        return self.query.filter_by(email=email).first()
+    
