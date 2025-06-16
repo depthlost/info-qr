@@ -1,0 +1,7 @@
+:root {
+    --bs-body-font-size: 16px;
+}
+
+html {
+    font-size: var(--bs-body-font-size) !important;
+}

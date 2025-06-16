@@ -3,5 +3,83 @@
 {% block title %}Info QR - Configuración{% endblock %}
 
 {% block body_content %}
-    <h1>Configuración</h1>
+  <form class="container py-4" aria-labelledby="settings-title">
+    <header class="mb-4">
+      <h1 id="settings-title" class="h3">Configuración</h1>
+    </header>
+
+    <div class="mb-4">
+      <label for="sizeSlider" class="form-label">Tamaño</label>
+      <input 
+        type="range" 
+        class="form-range" 
+        min="12" max="20" step="1" 
+        id="sizeSlider"
+        aria-valuemin="12"
+        aria-valuemax="20"
+        aria-valuenow="16"
+        aria-labelledby="sizeSlider"
+      >
+      
+      <div class="mt-2" id="sizeDisplay">
+        Tamaño actual: <span id="sizeValue">16</span>
+      </div>
+      <small class="form-text text-muted">
+        Ajusta entre 12 y 20. Predeterminado: 16.
+      </small>
+  </div>
+
+  <div class="mb-4">
+    <label for="themeSelect" class="form-label">Tema</label>
+    <select 
+      id="themeSelect"
+      class="form-select" 
+      aria-describedby="themeHelp"
+    >
+      <option value="light">Claro</option>
+      <option value="dark">Oscuro</option>
+    </select>
+    <div id="themeHelp" class="form-text">
+      Elige el tema de la interfaz.
+    </div>
+  </div>
+</form>
+
+<script>
+  const sizeSlider = document.getElementById('sizeSlider');
+  const sizeValue  = document.getElementById('sizeValue');
+  
+  const updateSize = (size = 16) => {
+    sizeSlider.value = size;
+    sizeValue.textContent = size;
+    sizeSlider.setAttribute('aria-valuenow', size);
+
+    localStorage.setItem('size', size);
+  }
+
+  updateSize(localStorage.getItem('size'))
+
+  sizeSlider.addEventListener('input', (event) => {
+    const size = event.target.value;
+
+    updateSize(size)
+    updateAppSize(size)
+  });
+
+  const themeSelect = document.getElementById('themeSelect');
+
+  const updateTheme = (theme = 'light') => {
+    themeSelect.value = theme
+    localStorage.setItem('theme', theme);
+  }
+
+  updateTheme(localStorage.getItem('theme'))
+  
+  themeSelect.addEventListener('change', (event) => {
+    const theme = event.target.value
+
+    updateTheme(theme)
+    updateAppTheme(theme)
+  });
+</script>
 {% endblock %}
