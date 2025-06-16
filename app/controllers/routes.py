@@ -19,7 +19,7 @@ def set_routes(app):
     )
 
     app.add_url_rule(
-        rule = "/nosotros",
+        rule = "/acerca",
         view_func = about,
         methods=["GET"]
     )

@@ -1,7 +1,28 @@
 {% extends "base.html" %}
 
-{% block title %}Info QR - Nosotros{% endblock %}
+{% block title %}Info QR - Acerca{% endblock %}
 
 {% block body_content %}
-    <h1>Nosotros</h1>
+    <header class="mb-5 text-center">
+      <h1 class="display-6">InfoQR</h1>
+      <p class="lead">Conoce más sobre la aplicación</p>
+    </header>
+
+    <section aria-labelledby="title-of-what-is-it" class="mb-5">
+      <h2 id="title-of-what-is-it" class="h4">¿Qué es?</h2>
+      <p>
+        InfoQR es una <strong>herramienta digital</strong> que permite a personas con o sin
+        discapacidades <strong>compartir información</strong> médica o de contacto de manera
+        segura mediante un código QR.
+      </p>
+    </section>
+
+    <section aria-labelledby="title-of-what-is-it-for" class="mb-5">
+      <h2 id="title-of-what-is-it-for" class="h4">¿Para que sirve?</h2>
+      <p>
+        InfoQR busca <strong>facilitar el acceso</strong> rápido a datos importantes en situaciones
+        donde el usuario no puede comunicarse por sí mismo, como <strong>emergencias</strong> médicas
+        o como una forma más sencilla de <strong>manejar la información</strong>.
+      </p>
+    </section>
 {% endblock %}
