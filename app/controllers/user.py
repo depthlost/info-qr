@@ -64,7 +64,7 @@ def show_user(user_id):
     if not user:
         abort(404)
     
-    return render_template("show_user.html", user=user, is_owner_user=user.id == get_authenticated_user_id())
+    return render_template("show_user_info.html", user=user, is_owner_user=user.id == get_authenticated_user_id())
 
 def edit_user(user_id):
     pass
