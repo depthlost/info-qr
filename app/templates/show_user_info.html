@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+
+{% block title %}Info QR - {{ user.name }}{% endblock %}
+
+{% block head %}  
+<style>
+    /* Estado inactivo de los tabs*/
+    #cat1-tab {
+      background-color: #f8d7da;
+      color: #842029;
+    }
+    #cat2-tab {
+      background-color: #fff3cd;
+      color: #664d03;
+    }
+    #cat3-tab {
+      background-color: #d1e7dd;
+      color: #0f5132;
+    }
+    /* Colores para cada tab cuando está activo */
+    #cat1-tab.nav-link.active {
+      background-color: #dc3545;
+      color: white;
+      border-color: #dc3545 #dc3545 #fff;
+    }
+    #cat2-tab.nav-link.active {
+      background-color: #ffc107;
+      color: black;
+      border-color: #ffc107 #ffc107 #fff;
+    }
+    #cat3-tab.nav-link.active {
+      background-color: #198754;
+      color: white;
+      border-color: #198754 #198754 #fff;
+    }
+  </style>
+{% endblock %}
+
+{% block body_content %}
+    <header class="mb-4 d-flex justify-content-between align-items-center">
+        <h1 class="h3 mb-0">Información de Usuario</h1>
+
+        {% if is_owner_user %}
+            <a href="{{ url_for('edit_user', user_id=get_authenticated_user_id()) }}" class="btn btn-primary" role="button">Editar</a>
+        {% endif %}
+    </header>
+
+    <ul class="nav nav-pills d-flex justify-content-center" id="categoriaTabs" role="tablist">
+        <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="cat1-tab" data-bs-toggle="tab" data-bs-target="#cat1" type="button" role="tab" aria-controls="cat1" aria-selected="true">
+                Deben saber
+            </button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="cat2-tab" data-bs-toggle="tab" data-bs-target="#cat2" type="button" role="tab" aria-controls="cat2" aria-selected="false">
+                Importante
+            </button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="cat3-tab" data-bs-toggle="tab" data-bs-target="#cat3" type="button" role="tab" aria-controls="cat3" aria-selected="false">
+                Me gusta - No me gusta
+            </button>
+        </li>
+    </ul>
+
+    <div class="tab-content mt-3" id="categoriaTabsContent">
+        <div class="tab-pane fade show active" id="cat1" role="tabpanel" aria-labelledby="cat1-tab">
+            {% include "info_must_know.html" %}
+        </div>
+        <div class="tab-pane fade" id="cat2" role="tabpanel" aria-labelledby="cat2-tab">
+            {% include "info_important.html" %}
+        </div>
+        <div class="tab-pane fade" id="cat3" role="tabpanel" aria-labelledby="cat3-tab">
+            {% include "info_likes_dislikes.html" %}
+        </div>
+    </div>
+
+{% endblock %}
