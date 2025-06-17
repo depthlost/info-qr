@@ -1,16 +1,18 @@
 {% extends "base.html" %}
 
-{% block title %}Info QR - Registro{% endblock %}
+{% block title %}Info QR - Registrarse{% endblock %}
 
 {% block body_content %}
-    <h1 class="mb-4">Registro de Usuario</h1>
+    <header class="mb-4 text-center">
+      <h1 class="h4">Registrarse</h1>
+    </header>
 
     <form action="{{ url_for('create_user') }}" method="post">
         {{ form.hidden_tag() }}
 
         <div class="row g-3">
         <div class="col-md-6">
-            <label for="name" class="form-label">Nombre*</label>
+            <label for="name" class="form-label">Nombre</label>
             <input
             type="text"
             class="form-control"
@@ -19,14 +21,13 @@
             placeholder="Ejemplo: María"
             required
             aria-required="true"
+            autofocus
             />
-            <div class="invalid-feedback">
-            Por favor ingresa tu nombre.
-            </div>
+            <div id="nameError" class="invalid-feedback"></div>
         </div>
 
         <div class="col-md-6">
-            <label for="surname" class="form-label">Apellido*</label>
+            <label for="surname" class="form-label">Apellido</label>
             <input
             type="text"
             class="form-control"
@@ -36,13 +37,11 @@
             required
             aria-required="true"
             />
-            <div class="invalid-feedback">
-            Por favor ingresa tu apellido.
-            </div>
+            <div id="surnameError" class="invalid-feedback"></div>
         </div>
 
         <div class="col-12">
-            <label for="email" class="form-label">Correo Electrónico*</label>
+            <label for="email" class="form-label">Correo Electrónico</label>
             <input
             type="email"
             class="form-control"
@@ -52,55 +51,230 @@
             required
             aria-required="true"
             />
-            <div class="invalid-feedback">
-            Por favor ingresa un correo electrónico válido.
-            </div>
+            <div id="emailError" class="invalid-feedback"></div>
         </div>
 
         <fieldset class="col-12">
             <legend class="form-label">Contraseña</legend>
             <div class="row g-3">
-            <div class="col-md-6">
-                <label for="password" class="form-label">Contraseña*</label>
-                <input
-                type="password"
-                class="form-control"
-                id="password"
-                name="password"
-                minlength="8"
-                placeholder="Mínimo 8 caracteres"
-                required
-                aria-required="true"
-                />
-                <div class="form-text">
-                Tu contraseña debe tener al menos 8 caracteres.
+                <div class="col-md-6">
+                    <label for="password" class="form-label">Contraseña</label>
+                    <input
+                    type="password"
+                    class="form-control"
+                    id="password"
+                    name="password"
+                    minlength="8"
+                    placeholder="Tu contraseña"
+                    required
+                    aria-required="true"
+                    />
+                    <div id="passwordError" class="invalid-feedback"></div>
                 </div>
-                <div class="invalid-feedback">
-                La contraseña debe tener al menos 8 caracteres.
+                <div class="col-md-6">
+                    <label for="confirmPassword" class="form-label">Repetir Contraseña</label>
+                    <input
+                    type="password"
+                    class="form-control"
+                    id="confirmPassword"
+                    placeholder="Repite la contraseña"
+                    required
+                    aria-required="true"
+                    />
+                    <div id="confirmPasswordError" class="invalid-feedback"></div>
                 </div>
-            </div>
-            <div class="col-md-6">
-                <label for="confirmPassword" class="form-label">Repetir Contraseña*</label>
-                <input
-                type="password"
-                class="form-control"
-                id="confirmPassword"
-                placeholder="Repite la contraseña"
-                required
-                aria-required="true"
-                />
-                <div class="invalid-feedback" id="confirmFeedback">
-                Las contraseñas no coinciden.
-                </div>
-            </div>
             </div>
         </fieldset>
         </div>
 
         <hr class="my-4" />
-
-        <button class="btn btn-primary btn-lg" type="submit">
-        Registrarse
-        </button>
+        
+        <div class="d-flex justify-content-center">
+            <button id="signUp" class="btn btn-primary btn-lg w-50" type="submit">Registrarse</button>
+        </div>
     </form>
+
+    <script>
+        const nameInput = document.getElementById('name');
+        const surnameInput = document.getElementById('surname');
+        const emailInput = document.getElementById('email');
+        const passwordInput = document.getElementById('password');
+        const confirmPasswordInput = document.getElementById('confirmPassword');
+        const signUpButton = document.getElementById('signUp');
+
+        let nameErrorMessage = '';
+        let surnameErrorMessage = '';
+        let emailErrorMessage = '';
+        let passwordErrorMessage = '';
+        let confirmPasswordErrorMessage = '';
+
+        const nameIsValid = () => nameErrorMessage == ''
+        const surnameIsValid = () => surnameErrorMessage == ''
+        const emailIsValid = () => emailErrorMessage == ''
+        const passwordIsValid = () => passwordErrorMessage == ''
+        const confirmPasswordIsValid = () => confirmPasswordErrorMessage == ''
+
+        validateName()
+        validateSurname()
+        validateEmail()
+        validatePassword()
+        validateConfirmPassword()
+        updateButtonState()
+
+        function validateName() {
+            const name = nameInput.value.trim();
+
+            if (name === '') {
+                nameErrorMessage = 'El nombre es obligatorio.';
+            } else if (name.length > 64) {
+                nameErrorMessage = 'El nombre no puede tener más de 64 caracteres.';
+            } else if (!/^[A-Za-zÁÉÍÓÚáéíóúÑñÜü ]+$/.test(name)) {
+                nameErrorMessage = 'El nombre solo puede tener letras (incluyendo acentos, ñ, ü) y espacios.';
+            } else {
+                nameErrorMessage = ''
+            }
+        }
+
+        function validateSurname() {
+            const surname = surnameInput.value.trim();
+
+            if (surname === '') {
+                surnameErrorMessage = 'El apellido es obligatorio.';
+            } else if (surname.length > 64) {
+                surnameErrorMessage = 'El apellido no puede tener más de 64 caracteres.';
+            } else if (!/^[A-Za-zÁÉÍÓÚáéíóúÑñÜü ]+$/.test(surname)) {
+                surnameErrorMessage = 'El apellido solo puede tener letras (incluyendo acentos, ñ, ü) y espacios.';
+            } else {
+                surnameErrorMessage = ''
+            }
+        }
+
+        function validateEmail() {
+            const email = emailInput.value.trim();
+
+            if (email === '') {
+                emailErrorMessage = 'El correo electrónico es obligatorio.';
+            } else if (email.length > 128) {
+                emailErrorMessage = 'El correo electrónico no puede tener más de 128 caracteres.';
+            } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                emailErrorMessage = 'El formato del correo electrónico no es válido.';
+            } else {
+                emailErrorMessage = ''
+            }
+        }
+
+        function validatePassword() {
+            const password = passwordInput.value;
+            
+            if (password === '') {
+                passwordErrorMessage = 'La contraseña es obligatoria.';
+            } else if (password.length < 8) {
+                passwordErrorMessage = 'La contraseña debe tener al menos 8 caracteres.';
+            } else if (!/[A-Z]/.test(password)) {
+                passwordErrorMessage = 'Debe incluir al menos una letra mayúscula.';
+            } else if (!/[a-z]/.test(password)) {
+                passwordErrorMessage = 'Debe incluir al menos una letra minúscula.';
+            } else if (!/[0-9]/.test(password)) {
+                passwordErrorMessage = 'Debe incluir al menos un número.';
+            } else {
+                passwordErrorMessage = '';
+            }
+        }
+
+        function validateConfirmPassword() {
+            if (confirmPasswordInput.value != passwordInput.value) {
+                confirmPasswordErrorMessage = 'Las contraseñas deben coincidir.';
+            } else {
+                confirmPasswordErrorMessage = '';
+            }
+        }
+
+        function setValidationState(input, errorMessage) {
+            const errorDiv = document.getElementById(input.id + 'Error');
+            
+            if (errorMessage) {
+                input.classList.add('is-invalid');
+                input.setAttribute('aria-invalid', 'true');
+                errorDiv.textContent = errorMessage;
+            } else {
+                input.classList.remove('is-invalid');
+                input.setAttribute('aria-invalid', 'false');
+                errorDiv.textContent = '';
+            }
+        }
+
+        function updateButtonState() {
+            signUpButton.disabled = !nameIsValid() || !surnameIsValid() || !emailIsValid() || !passwordIsValid() || !confirmPasswordIsValid();
+        }
+
+        nameInput.addEventListener('blur', () => {
+            validateName()
+            setValidationState(nameInput, nameErrorMessage);
+            updateButtonState()
+        });
+
+        nameInput.addEventListener('input', () => {
+            validateName()
+            setValidationState(nameInput, '');
+            updateButtonState()
+        });
+
+        surnameInput.addEventListener('blur', () => {
+            validateSurname()
+            setValidationState(surnameInput, surnameErrorMessage);
+            updateButtonState()
+        });
+
+        surnameInput.addEventListener('input', () => {
+            validateSurname()
+            setValidationState(surnameInput, '');
+            updateButtonState()
+        });
+
+        emailInput.addEventListener('blur', () => {
+            validateEmail()
+            setValidationState(emailInput, emailErrorMessage);
+            updateButtonState()
+        });
+
+        emailInput.addEventListener('input', () => {
+            validateEmail()
+            setValidationState(emailInput, '');
+            updateButtonState()
+        });
+
+        passwordInput.addEventListener('blur', () => {
+            validatePassword()
+            validateConfirmPassword()
+
+            setValidationState(passwordInput, passwordErrorMessage);
+
+            if (confirmPasswordInput.value != '') {
+                setValidationState(confirmPasswordInput, confirmPasswordErrorMessage);
+            }
+
+            updateButtonState()
+        });
+
+        passwordInput.addEventListener('input', () => {
+            validatePassword()
+            validateConfirmPassword()
+
+            setValidationState(passwordInput, '');
+            setValidationState(confirmPasswordInput, '');
+            updateButtonState()
+        });
+
+        confirmPasswordInput.addEventListener('blur', () => {
+            validateConfirmPassword()
+            setValidationState(confirmPasswordInput, confirmPasswordErrorMessage);
+            updateButtonState()
+        });
+
+        confirmPasswordInput.addEventListener('input', () => {
+            validateConfirmPassword()
+            setValidationState(confirmPasswordInput, '');
+            updateButtonState()
+        });
+    </script>
 {% endblock %}
