@@ -39,7 +39,7 @@
                         <a href="{{ url_for('sign_up') }}" class="btn btn-primary" role="button">Registrarse</a>
                     {% else %}
                         <a href="{{ url_for('sign_out') }}" class="btn btn-outline-secondary" role="button">Cerrar Sesión</a>
-                        <a href="{{ url_for('show_user', user_id=get_authenticated_user_id()) }}" class="btn btn-primary" role="button">Perfil</a>
+                        <a href="{{ url_for('home_user', user_id=get_authenticated_user_id()) }}" class="btn btn-primary" role="button">Perfil</a>
                     {% endif %}
                 </div>
                 </div>
@@ -47,8 +47,8 @@
             </nav>
         </header>
 
-        <main id="main-content" role="main" class="container py-5 px-4 d-flex justify-content-center" style="max-width: 800px;">
-            <div class="card shadow-sm p-4" style="min-width: 380px">
+        <main id="main-content" role="main" class="container py-4 px-4 d-flex justify-content-center" style="max-width: 800px;">
+            <div class="card shadow-sm p-4" style="min-width: 320px">
                 {% block body_content %}{% endblock %}
             </div>
         </main>

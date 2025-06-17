@@ -26,13 +26,13 @@ def create_user():
     
     login_user(user)
 
-    return redirect(url_for("show_user", user_id=user.id))
+    return redirect(url_for("home_user", user_id=user.id))
 
 def sign_in():
     user = get_authenticated_user()
 
     if user:
-        return redirect(url_for("show_user", user_id=user.id))
+        return redirect(url_for("home_user", user_id=user.id))
     
     return render_template("sign_in.html", form=SignInForm())
 
@@ -45,7 +45,7 @@ def authenticate():
 
         if user and check_password_hash(user.password, form.password.data):
             login_user(user)
-            return redirect(url_for("show_user", user_id=user.id))
+            return redirect(url_for("home_user", user_id=user.id))
         
         auth_error = True
     else:
@@ -57,6 +57,16 @@ def sign_out():
     logout_user()
     
     return redirect(url_for("main"))
+
+def home_user(user_id):
+    user = User.get(user_id)
+
+    if not user:
+        abort(404)
+    elif user.id != get_authenticated_user_id():
+        return redirect(url_for("show_user", user_id=user.id))
+
+    return render_template("home_user.html", user=user)
 
 def show_user(user_id):
     user = User.get(user_id)
