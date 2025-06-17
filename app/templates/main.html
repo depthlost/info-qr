@@ -14,16 +14,39 @@
     
     <hr class="my-4">
     
-    <form class="row g-3 justify-content-around" role="search" aria-label="Formulario para buscar por identificador">
+    <form id="searchForm" class="row g-3 justify-content-around" role="search" aria-label="Formulario para buscar por identificador" novalidate>
         <div class="col-md-6">
             <label for="identifier" class="form-label">Ingresar Identificador</label>
-            <input type="text" id="identifier" name="identifier" class="form-control" placeholder="Ejemplo: fb22d174-f2d7-42e2-abf7-72e2c7118c6d" aria-describedby="identifierHelp">
+            <input type="text" id="identifier" name="identifier" class="form-control" placeholder="Ejemplo: fb22d174-f2d7-42e2-abf7-72e2c7118c6d" aria-describedby="identifierHelp" required>
             <div id="identifierHelp" class="form-text">
                 Introduce un identificador único para buscar la información.
+            </div>
+            <div id="identifierError" class="invalid-feedback" aria-live="polite">
+                El identificador ingresado no es válido.
             </div>
         </div>
         <div class="col-md-3 align-self-center">
             <button type="submit" class="btn btn-outline-primary w-100" aria-label="Buscar identificador">Buscar</button>
         </div>
     </form>
+
+    <script>
+        const searchForm = document.getElementById('searchForm');
+        const identifierInput = document.getElementById('identifier');
+        const identifierErrorDiv = document.getElementById('identifierError');
+        const uuidRegex = /^[0-9a-fA-F]{8}\-[0-9a-fA-F]{4}\-4[0-9a-fA-F]{3}\-[89ABab][0-9a-fA-F]{3}\-[0-9a-fA-F]{12}$/;
+
+        searchForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+            const identifier = identifierInput.value.trim();
+            
+            if (!uuidRegex.test(identifier)) {
+                identifierInput.classList.add('is-invalid');
+                identifierErrorDiv.textContent = 'El identificador ingresado no es válido.';
+            } else {
+                identifierInput.classList.remove('is-invalid');
+                window.location.href = `{{ url_for('show_user', user_id='') }}${encodeURIComponent(identifier)}`;
+            }
+        });
+    </script>
 {% endblock %}
