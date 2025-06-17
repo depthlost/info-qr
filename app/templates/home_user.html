@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block title %}Info QR - Perfil de {{ user.name }}{% endblock %}
+
+{% block body_content %}
+    <div class="text-center">
+        <h1 class="mb-3">Bienvenido, {{ user.name }}</h1>
+        <h2 class="h3">Tu Código QR Personal</h2>
+        <div class="qr-container">
+            <img src="{{ url_for('get_user_qrcode', user_id=user.id) }}" 
+                alt="Código QR" 
+                class="img-fluid shadow mb-2 bg-body rounded w-100" 
+                style="max-width: 300px;">
+        </div>
+
+        <div class="uuid-container d-flex flex-column flex-md-row justify-content-center align-items-center gap-2">
+            <span class="fw-bold mb-0"> 
+                ID: <code id="uuid-text" class="text-muted user-select-all">{{ user.id }}</code>
+            </span>
+            <button class="btn btn-secondary btn-sm" 
+                    aria-label="Copiar identificador {{ user.id }}"
+                    aria-describedby="uuid-text" 
+                    onclick="copyUUID()">
+                <i class="bi bi-copy me-2" aria-hidden="true"></i> Copiar
+            </button>
+        </div>
+
+        <div class="d-flex justify-content-center gap-3 mt-3">
+            <button class="btn btn-primary">
+                <i class="bi bi-download me-2" aria-hidden="true"></i> Descargar QR
+            </button>
+            <button class="btn btn-primary">
+                <i class="bi bi-share me-2" aria-hidden="true"></i> Compartir
+            </button>
+        </div>
+
+        <div class="mt-3">
+            <a href="{{ url_for('show_user', user_id=get_authenticated_user_id()) }}" 
+               class="btn btn-success">
+                Ver Información
+            </a>
+        </div>
+
+    </div>
+
+    <script>
+        function copyUUID() {
+            const text = "{{ user.id }}";
+            navigator.clipboard.writeText(text)
+                .then(() => alert("Código copiado al portapapeles"))
+                .catch(() => alert("Error al copiar el código"));
+        }
+    </script>
+{% endblock %}
