@@ -4,8 +4,11 @@ from .about import about
 from .help import help
 from .settings import settings
 from .user import sign_up, create_user, sign_in, authenticate, sign_out, show_user, edit_user, update_user, get_user_qrcode
+from .error_handler import page_not_found
 
 def set_routes(app):
+    set_error_handler_routes(app)
+
     app.add_url_rule(
         rule = "/",
         view_func = main,
@@ -83,3 +86,6 @@ def set_routes(app):
         view_func = get_user_qrcode,
         methods=["GET"]
     )
+
+def set_error_handler_routes(app):
+    app.register_error_handler(404, page_not_found)
