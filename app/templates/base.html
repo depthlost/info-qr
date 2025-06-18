@@ -35,7 +35,7 @@
                 </ul>
                 <div class="d-flex gap-2">
                     {% if not user_is_authenticated() %}
-                        <a href="{{ url_for('sign_in') }}" class="btn btn-outline-secondary" role="button">Acceder</a>
+                        <a href="{{ url_for('sign_in') }}" class="btn btn-secondary" role="button">Acceder</a>
                         <a href="{{ url_for('sign_up') }}" class="btn btn-primary" role="button">Registrarse</a>
                     {% else %}
                         <a href="{{ url_for('home_user', user_id=get_authenticated_user_id()) }}" class="btn btn-primary" role="button">Perfil</a>
