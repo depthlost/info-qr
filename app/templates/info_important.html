@@ -3,12 +3,16 @@
         <div class="col-md-10">
             <h2 class="h3">Lo que es IMPORTANTE para mí</h2>
         </div>
-        <div class="col-md-2 d-flex justify-content-end align-items-start" id="nav-likes-dislikes">
+        <div class="col-md-2 d-flex justify-content-end align-items-start" id="nav-important">
             <div class="dropdown">
-                <button class="btn btn-warning dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <button class="btn btn-warning dropdown-toggle" 
+                        type="button" 
+                        data-bs-toggle="dropdown" 
+                        aria-expanded="false"
+                        id="dropdown-important">
                     ÍNDICE
                 </button>
-                <ul class="dropdown-menu">
+                <ul class="dropdown-menu" aria-labelledby="dropdown-important">
                     <li><a class="dropdown-item" href="#estoy_ansioso">¿Estoy ansioso?</a></li>
                     <li><a class="dropdown-item" href="#estoy_dolorido">¿Estoy dolorido?</a></li>
                     <li><a class="dropdown-item" href="#estoy_asustado">¿Estoy asustado?</a></li>
@@ -29,7 +33,7 @@
 
     <hr class="my-2 border border-warning">
 
-    <div data-bs-spy="scroll" data-bs-target="#nav-likes-dislikes" data-bs-root-margin="0px 0px -40%" data-bs-smooth-scroll="true" class="scrollspy-example bg-body-tertiary p-3 rounded-2" tabindex="0">
+    <div data-bs-spy="scroll" data-bs-target="#nav-important" data-bs-root-margin="0px 0px -40%" data-bs-smooth-scroll="true" class="scrollspy-example bg-body-tertiary p-3 rounded-2" tabindex="0">
         <h3 class="h5" id="estoy_ansioso">¿Qué necesito que hagan si estoy ansiosa/ansioso?</h3>
         <div class="border border-warning rounded p-3 mb-3">
             <p class="mb-0"> </p>

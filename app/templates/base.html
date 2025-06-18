@@ -38,8 +38,8 @@
                         <a href="{{ url_for('sign_in') }}" class="btn btn-outline-secondary" role="button">Acceder</a>
                         <a href="{{ url_for('sign_up') }}" class="btn btn-primary" role="button">Registrarse</a>
                     {% else %}
-                        <a href="{{ url_for('sign_out') }}" class="btn btn-outline-secondary" role="button">Cerrar Sesión</a>
                         <a href="{{ url_for('home_user', user_id=get_authenticated_user_id()) }}" class="btn btn-primary" role="button">Perfil</a>
+                        <a href="{{ url_for('sign_out') }}" class="btn btn-secondary" role="button">Cerrar Sesión</a>
                     {% endif %}
                 </div>
                 </div>
