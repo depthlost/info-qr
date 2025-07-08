@@ -1,7 +1,7 @@
 
 import io
 import qrcode
-from flask import render_template, abort, url_for, send_file, redirect
+from flask import current_app, render_template, abort, url_for, send_file, redirect
 from werkzeug.security import generate_password_hash, check_password_hash
 from app.models import User
 from app.forms import SignUpForm, SignInForm
@@ -83,7 +83,7 @@ def update_user(user_id):
     pass
 
 def get_user_qrcode(user_id):
-    data = url_for(endpoint="show_user", user_id=user_id, _external=True)
+    data = current_app.config["BASE_URL"] + url_for(endpoint="show_user", user_id=user_id)
     
     qr_code = qrcode.QRCode(version=1, box_size=10, border=4)
     qr_code.add_data(data)

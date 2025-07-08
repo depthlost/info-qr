@@ -27,6 +27,7 @@ python -c 'import secrets; print(secrets.token_hex())'
 # base
 environment = "development"
 secret_key = ""
+base_url = "http://localhost:5000"
 
 # development
 database_sqlite_file="database.db"

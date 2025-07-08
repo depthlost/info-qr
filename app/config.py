@@ -4,6 +4,7 @@ import os
 class Config:
     class Base:
         SECRET_KEY = os.environ["secret_key"]
+        BASE_URL = os.environ["base_url"]
         SQLALCHEMY_ECHO = False
         SQLALCHEMY_TRACK_MODIFICATIONS = False
 
