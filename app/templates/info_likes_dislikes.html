@@ -1,9 +1,11 @@
+{% import 'macros/edit_buttons.html' as edit_buttons %}
+
 <div class="border border-success border-2 rounded p-3">
     <div class="row px-3 mb-3">
         <div class="col-md-10">
             <h2 class="h3">Qué ME GUSTA - NO ME GUSTA</h2>
-            <p><strong>Me gusta:</strong> Qué me pone contento, qué cosas me gusta hacer, qué me hace sentir bien.</p>
-            <p><strong>NO me gusta:</strong> Qué me pone incómodo, me enoja, me hace sentir mal.</p>
+            <p><strong>Me gusta:</strong> Qué me pone contento, qué cosas me gusta hacer, qué me hace sentir bien. Por  ejemplo: mirar TV, leer, música, rutinas.</p>
+            <p><strong>NO me gusta:</strong> Qué me pone incómodo, me enoja, me hace sentir mal. Por ejemplo: los gritos, el contacto físico, qué comidas.</p>
         </div>
         <div class="col-md-2 d-flex justify-content-end align-items-start" id="nav-likes-dislikes">
             <div class="dropdown">
@@ -27,23 +29,61 @@
     <hr class="my-2 border border-success">
 
     <div class="bg-body-tertiary p-3 rounded-2" tabindex="0">
-        <h3 class="h5" id="me_gusta">Me gusta</h3>
-        <p class="h6">Por favor hagan esto:</p>
-        <div class="border border-success rounded p-3 mb-3">
-            <p class="mb-0">mirar TV, <br> leer, <br> musica, <br> X rutina</p>
-        </div>
-        <h3 class="h5" id="no_me_gusta">NO me gusta</h3>
-        <p class="h6">Por favor NO hagan esto:</p>
-        <div class="border border-success rounded p-3 mb-3">
-            <p class="mb-0">los gritos, <br> el contacto físico, <br> X comidas</p>
-        </div>
-        <h3 class="h5" id="notas">Notas</h3>
-        <div class="border border-success rounded p-3 mb-3">
-            <p class="mb-0"> </p>
-        </div>
-        <h3 class="h5" id="contactos">Contactos y sitios útiles</h3>
-        <div class="border border-success rounded p-3 mb-3">
-            <p class="mb-0"> </p>
-        </div>
+        
+        <section aria-labelledby="me_gusta">
+            <h3 class="h5" id="me_gusta">Me gusta</h3>
+            <p class="h6">Por favor hagan esto:</p>
+            <div 
+                class="border border-success rounded mb-3 p-3" 
+                id="me_gusta_content"
+                aria-describedby="me_gusta"
+            >
+            </div>
+            {% if is_owner_user %}
+                {{ edit_buttons.buttons("me_gusta_content", "me_gusta") }}
+            {% endif %}
+        </section>
+
+
+        <section aria-labelledby="no_me_gusta">
+            <h3 class="h5" id="no_me_gusta">NO me gusta</h3>
+            <p class="h6">Por favor NO hagan esto:</p>
+            <div 
+                class="border border-success rounded mb-3 p-3" 
+                id="no_me_gusta_content"
+                aria-describedby="no_me_gusta"
+            >
+            </div>
+            {% if is_owner_user %}
+                {{ edit_buttons.buttons("no_me_gusta_content", "no_me_gusta") }}
+            {% endif %}
+        </section>
+
+
+        <section aria-labelledby="notas">
+            <h3 class="h5" id="notas">Notas</h3>
+            <div 
+                class="border border-success rounded mb-3 p-3" 
+                id="notas_content" 
+                aria-describedby="notas"
+            ></div>
+            {% if is_owner_user %}
+                {{ edit_buttons.buttons("notas_content", "notas") }}
+            {% endif %}
+        </section>
+
+
+        <section class="content-section" role="region" aria-labelledby="contactos">
+            <h3 class="h5" id="contactos">Contactos y sitios útiles</h3>
+            <div 
+                class="border border-success rounded mb-3 p-3" 
+                id="contactos_content"
+                aria-describedby="contactos"
+            >
+            </div>
+            {% if is_owner_user %}
+                {{ edit_buttons.buttons("contactos_content", "contactos") }}
+            {% endif %}
+        </section>
     </div>
 </div>

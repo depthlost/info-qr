@@ -39,10 +39,6 @@
 {% block body_content %}
     <header class="mb-4 d-flex justify-content-between align-items-center">
         <h1 class="h3 mb-0">Información de Usuario</h1>
-
-        {% if is_owner_user %}
-            <a href="{{ url_for('edit_user', user_id=get_authenticated_user_id()) }}" class="btn btn-primary" role="button">Editar</a>
-        {% endif %}
     </header>
 
     <ul class="nav nav-pills d-flex justify-content-center" id="categoriaTabs" role="tablist">
@@ -94,4 +90,130 @@
         </div>
     </div>
 
+{% endblock %}
+
+{% block script %}
+{% if is_owner_user %}
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    
+    document.addEventListener("click", (event) => {
+        const target = event.target;
+
+        if (target.classList.contains("edit-btn")) {
+            const targetId = target.dataset.target;
+            toggleFields(targetId, true);
+            toggleButtons(targetId, true);
+        } else if (target.classList.contains("cancel-btn")) {
+            const targetId = target.dataset.target;
+            toggleFields(targetId, false);
+            toggleButtons(targetId, false);
+        } else if (target.classList.contains("save-btn")) {
+            const targetId = target.dataset.target;
+            saveData(targetId);
+            toggleFields(targetId, false);
+            toggleButtons(targetId, false);
+        }
+    });
+
+    // funcion para cambiar la visibilidad de los botones de edicion
+    function toggleButtons(targetId, editing) {
+        document.querySelectorAll(`[data-target="${targetId}"]`).forEach(btn => {
+            if (btn.classList.contains("edit-btn")) {
+                btn.classList.toggle("d-none", editing);
+                if (!editing) {
+                btn.focus();
+                }
+            } else {
+                btn.classList.toggle("d-none", !editing);
+            }
+        });
+    }
+
+    //funcion para cambiar el modo edicion de los campos según si son listado de datos o simples
+    function toggleFields(targetId, editing) {
+        const content = document.getElementById(targetId);
+
+        if(content.dataset.editableList === "true") { // caso listado
+            const fields = content.querySelectorAll("dd");
+            if (editing) {
+                fields.forEach(field => {
+                    field.dataset.original = field.textContent.trim(); // guarda contenido en atributo
+                    
+                    const key = field.dataset.field;
+                    const type = field.dataset.type || "text";
+                    const original = field.textContent.trim();
+                    const labelId = field.dataset.label;
+
+                    const input = document.createElement("input");
+                    input.type = type;
+                    input.name = key;
+                    input.value = original;
+                    input.className = "form-control form-control-sm";
+                    input.style.width = "100%";
+                    input.setAttribute('aria-labelledby', labelId);
+                    
+
+                    // Reemplazar contenido y agrego el input
+                    field.textContent = '';
+                    field.appendChild(input);
+                });
+                
+                const firstInput = content.querySelector("input");
+                if (firstInput) firstInput.focus(); //cambio el foco al primer input
+                
+            } else {
+                fields.forEach(field => {
+                    field.textContent = field.dataset.original; // restaura contenido (cuando se guarda se actualiza el atributo original)
+                });
+            }
+        } else { // caso simple
+            if (editing) {
+                content.dataset.original = content.textContent; // guarda el contenido original
+                content.setAttribute("contenteditable", "true");
+                content.setAttribute("role", "textbox");
+                content.setAttribute("aria-multiline", "true");
+                content.focus();
+            } else {
+                content.textContent = content.dataset.original; // restaura contenido
+                content.removeAttribute("contenteditable");
+                content.removeAttribute("role");
+                content.removeAttribute("aria-multiline");
+            }
+            
+        }
+    }
+
+    // funcion que tendríamos que modificar para usar la api (ahora la uso para actualizar la info visual)
+    // podemos usar un atributo como data-field en los diferentes campos para usarlos con la api
+    function saveData(targetId) {
+        const content = document.getElementById(targetId);
+        
+        if(content.dataset.editableList === "true") { // caso listado
+            const data = {};
+            content.querySelectorAll("dd").forEach(field => {
+                const input = field.querySelector("input");
+                if (input) {
+                    const name = input.name;
+                    const value = input.value.trim();
+
+                    data[name] = value; // vendría a ser para la API
+                    field.dataset.original = value; // actualiza valor guardado
+                    field.textContent = value; // cargo los cambios en los campos visuales
+                }
+            });
+            console.log("Guardando:", targetId, data);
+        } else { // caso simple
+            const updatedText = content.textContent;
+
+            // Hacer uso de la API para guardar en la BD
+            console.log("Guardando:", targetId, updatedText);
+
+            content.dataset.original = updatedText;
+        }
+    }
+
+});
+</script>
+{% endif %}
 {% endblock %}

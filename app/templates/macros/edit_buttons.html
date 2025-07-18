@@ -1,0 +1,30 @@
+{% macro buttons(target_id, label_id) %}
+<div class="d-flex justify-content-end">
+    <button 
+        class="btn btn-primary btn-sm edit-btn mb-3" 
+        data-target="{{ target_id }}"
+        aria-label="Editar contenido" 
+        aria-describedby= "{{ label_id }}"
+    >
+        Editar
+    </button>
+    <div class="btn-group mb-3" role="group">
+        <button 
+            class="btn btn-success btn-sm save-btn d-none" 
+            data-target="{{ target_id }}"
+            aria-label="Guardar cambios"
+            aria-describedby= "{{ label_id }}"
+        >
+            Guardar
+        </button>
+        <button 
+            class="btn btn-danger btn-sm cancel-btn d-none" 
+            data-target="{{ target_id }}"
+            aria-label="Cancelar edición"
+            aria-describedby= "{{ label_id }}"
+        >
+            Cancelar
+        </button>
+    </div>
+</div>
+{% endmacro %}
