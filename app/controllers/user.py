@@ -36,7 +36,6 @@ def sign_in():
     
     return render_template("sign_in.html", form=SignInForm())
 
-
 def authenticate():
     form = SignInForm()
 
@@ -75,12 +74,6 @@ def show_user(user_id):
         abort(404)
     
     return render_template("show_user_info.html", user=user, is_owner_user=user.id == get_authenticated_user_id())
-
-def edit_user(user_id):
-    pass
-
-def update_user(user_id):
-    pass
 
 def get_user_qrcode(user_id):
     data = current_app.config["BASE_URL"] + url_for(endpoint="show_user", user_id=user_id)

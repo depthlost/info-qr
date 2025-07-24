@@ -1,7 +1,11 @@
 
-from sqlalchemy import String, Table, Column, ForeignKey
+from typing import Optional
+
+from sqlalchemy import Text, Table, Column, ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column, relationship
+
 from app.database import db
+from app.models import Model
 
 support_persons_association = Table(
     'support_persons',
@@ -17,12 +21,12 @@ other_professionals_association = Table(
     Column('contact_id', ForeignKey('contact.id'), primary_key=True)
 )
 
-class Contact(db.Model):
+class Contact(Model):
     id: Mapped[int] = mapped_column(primary_key=True)
-    name: Mapped[str] = mapped_column(String(128))
-    relation: Mapped[str] = mapped_column(String(64))
-    address: Mapped[str] = mapped_column(String(256))
-    phone: Mapped[str] = mapped_column(String(20))
+    name: Mapped[Optional[str]] = mapped_column(Text)
+    relation: Mapped[Optional[str]] = mapped_column(Text)
+    address: Mapped[Optional[str]] = mapped_column(Text)
+    phone: Mapped[Optional[str]] = mapped_column(Text)
 
     supported_user: Mapped["User"] = relationship(
         "User",
@@ -35,3 +39,12 @@ class Contact(db.Model):
         secondary=other_professionals_association,
         back_populates="other_professionals"
     )
+
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "name": self.name,
+            "relation": self.relation,
+            "address": self.address,
+            "phone": self.phone
+        }

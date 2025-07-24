@@ -3,7 +3,10 @@ from .main import main
 from .about import about
 from .help import help
 from .settings import settings
-from .user import sign_up, create_user, sign_in, authenticate, sign_out, home_user, show_user, edit_user, update_user, get_user_qrcode
+from .user import sign_up, create_user, sign_in, authenticate, sign_out, home_user, show_user, get_user_qrcode
+from .api.user import update_user
+from .api.medication import create_medication, update_medication, remove_medication
+from .api.contact import create_contact, update_contact, remove_contact
 from .error_handler import page_not_found
 
 def set_routes(app):
@@ -74,15 +77,9 @@ def set_routes(app):
         view_func = show_user,
         methods=["GET"]
     )
-
-    app.add_url_rule(
-        rule = "/usuario/<uuid:user_id>/actualizar",
-        view_func = edit_user,
-        methods=["GET"]
-    )
     
     app.add_url_rule(
-        rule = "/usuario/<uuid:user_id>/actualizar",
+        rule = "/usuario/actualizar",
         view_func = update_user,
         methods=["POST"]
     )
@@ -91,6 +88,42 @@ def set_routes(app):
         rule = "/usuario/<uuid:user_id>/qr",
         view_func = get_user_qrcode,
         methods=["GET"]
+    )
+
+    app.add_url_rule(
+        rule = "/usuario/medicamento/crear",
+        view_func = create_medication,
+        methods=["POST"]
+    )
+    
+    app.add_url_rule(
+        rule = "/usuario/medicamento/actualizar",
+        view_func = update_medication,
+        methods=["POST"]
+    )
+    
+    app.add_url_rule(
+        rule = "/usuario/medicamento/borrar",
+        view_func = remove_medication,
+        methods=["POST"]
+    )
+
+    app.add_url_rule(
+        rule = "/usuario/contacto/crear",
+        view_func = create_contact,
+        methods=["POST"]
+    )
+    
+    app.add_url_rule(
+        rule = "/usuario/contacto/actualizar",
+        view_func = update_contact,
+        methods=["POST"]
+    )
+    
+    app.add_url_rule(
+        rule = "/usuario/contacto/borrar",
+        view_func = remove_contact,
+        methods=["POST"]
     )
 
 def set_error_handler_routes(app):

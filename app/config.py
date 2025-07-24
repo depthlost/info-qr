@@ -7,6 +7,7 @@ class Config:
         BASE_URL = os.environ["base_url"]
         SQLALCHEMY_ECHO = False
         SQLALCHEMY_TRACK_MODIFICATIONS = False
+        WTF_I18N_ENABLED = False
 
     class Development(Base):
         SQLALCHEMY_DATABASE_URI = "sqlite:///" + os.environ["database_sqlite_file"]
