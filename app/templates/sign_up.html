@@ -54,12 +54,11 @@
             <div id="emailError" class="invalid-feedback"></div>
         </div>
 
-        <fieldset class="col-12">
-            <legend class="form-label">Contraseña</legend>
-            <div class="row g-3">
-                <div class="col-md-6">
-                    <label for="password" class="form-label">Contraseña</label>
-                    <input
+        <div class="col-md-6">
+            <label for="password" class="form-label">Contraseña</label>
+            
+            <div class="input-group">
+                <input
                     type="password"
                     class="form-control"
                     id="password"
@@ -68,12 +67,64 @@
                     placeholder="Tu contraseña"
                     required
                     aria-required="true"
+                    aria-describedby="passwordHelp"
                     />
-                    <div id="passwordError" class="invalid-feedback"></div>
-                </div>
-                <div class="col-md-6">
-                    <label for="confirmPassword" class="form-label">Repetir Contraseña</label>
-                    <input
+
+                <button
+                    type="button"
+                    class="btn btn-outline-secondary"
+                    tabindex="-1"
+                    >
+                    <i class="bi bi-eye"></i>
+                </button>
+            </div>
+
+            <aside
+                id="passwordHelp"
+                class="visually-hidden m-3"
+                role="region"
+                aria-live="polite"
+                >
+                <h2 class="visually-hidden">Requisitos de la contraseña</h2>
+
+                <ul>
+                    <li id="minimum-character-requirement" class="d-flex align-items-center">
+                        <i class="bi bi-dash-circle-fill me-2"></i>
+                        8 caracteres mínimo
+                    </li>
+                    <li id="at-least-3-requirement" class="d-flex align-items-center">
+                        <i class="bi bi-dash-circle-fill me-2"></i>
+                        3 de los siguientes:
+                    </li>
+                    <ul>
+                        <li id="uppercase-character-requirement" class="d-flex align-items-center">
+                            <i class="bi bi-dash-circle-fill me-2"></i>
+                            Al menos 1 letra mayúscula
+                        </li>
+                        <li id="lowercase-character-requirement" class="d-flex align-items-center">
+                            <i class="bi bi-dash-circle-fill me-2"></i>
+                            Al menos 1 letra minúscula
+                        </li>
+                        <li id="numbers-requirement" class="d-flex align-items-center">
+                            <i class="bi bi-dash-circle-fill me-2"></i>
+                            Al menos 1 número (0–9)
+                        </li>
+                        <li id="special-character-requirement" class="d-flex align-items-center">
+                            <i class="bi bi-dash-circle-fill me-2"></i>
+                            Al menos 1 carácter especial
+                        </li>
+                    </ul>
+                </ul>
+            </aside>
+
+            <div id="passwordError" class="invalid-feedback d-block"></div>
+        </div>
+
+
+        <div class="col-md-6">
+            <label for="confirmPassword" class="form-label">Repetir Contraseña</label>
+            <div class="input-group">
+                <input
                     type="password"
                     class="form-control"
                     id="confirmPassword"
@@ -81,13 +132,21 @@
                     required
                     aria-required="true"
                     />
-                    <div id="confirmPasswordError" class="invalid-feedback"></div>
-                </div>
+                                
+                <button
+                    type="button"
+                    class="btn btn-outline-secondary"
+                    tabindex="-1"
+                    >
+                    <i class="bi bi-eye"></i>
+                </button>
+
             </div>
-        </fieldset>
+            <div id="confirmPasswordError" class="invalid-feedback d-block"></div>
+        </div>
         </div>
 
-        <hr class="my-4" />
+        <div class="my-4"></div>
         
         <div class="d-flex justify-content-center">
             <button id="signUp" class="btn btn-primary btn-lg w-50" type="submit">Registrarse</button>
@@ -102,24 +161,34 @@
         const confirmPasswordInput = document.getElementById('confirmPassword');
         const signUpButton = document.getElementById('signUp');
 
+        const passwordHelp = document.getElementById('passwordHelp');
+        const minimumCharacterRequirement = passwordHelp.querySelector('#minimum-character-requirement')
+        const atLeast3Requirement = passwordHelp.querySelector('#at-least-3-requirement')
+        const uppercaseCharacterRequirement = passwordHelp.querySelector('#uppercase-character-requirement')
+        const lowercaseCharacterRequirement = passwordHelp.querySelector('#lowercase-character-requirement')
+        const numbersRequirement = passwordHelp.querySelector('#numbers-requirement')
+        const specialCharacterRequirement = passwordHelp.querySelector('#special-character-requirement')
+
         let nameErrorMessage = '';
+        let nameWasModified = false
+
         let surnameErrorMessage = '';
+        let surnameWasModified = false
+
         let emailErrorMessage = '';
+        let emailWasModified = false
+
         let passwordErrorMessage = '';
+        let passwordWasModified = false
+
         let confirmPasswordErrorMessage = '';
+        let confirmPasswordWasModified = false
 
         const nameIsValid = () => nameErrorMessage == ''
         const surnameIsValid = () => surnameErrorMessage == ''
         const emailIsValid = () => emailErrorMessage == ''
         const passwordIsValid = () => passwordErrorMessage == ''
         const confirmPasswordIsValid = () => confirmPasswordErrorMessage == ''
-
-        validateName()
-        validateSurname()
-        validateEmail()
-        validatePassword()
-        validateConfirmPassword()
-        updateButtonState()
 
         function validateName() {
             const name = nameInput.value.trim();
@@ -165,20 +234,49 @@
 
         function validatePassword() {
             const password = passwordInput.value;
-            
-            if (password === '') {
-                passwordErrorMessage = 'La contraseña es obligatoria.';
-            } else if (password.length < 8) {
-                passwordErrorMessage = 'La contraseña debe tener al menos 8 caracteres.';
-            } else if (!/[A-Z]/.test(password)) {
-                passwordErrorMessage = 'Debe incluir al menos una letra mayúscula.';
-            } else if (!/[a-z]/.test(password)) {
-                passwordErrorMessage = 'Debe incluir al menos una letra minúscula.';
-            } else if (!/[0-9]/.test(password)) {
-                passwordErrorMessage = 'Debe incluir al menos un número.';
-            } else {
-                passwordErrorMessage = '';
+
+            const updateElementState = (element, isValid) => {
+                const elementIcon = element.querySelector('i')
+
+                if (isValid) {
+                    element.classList.remove('text-muted')
+                    element.classList.add('text-success')
+
+                    elementIcon.classList.remove('bi-dash-circle-fill')
+                    elementIcon.classList.add('bi-check-circle-fill')
+                } else {
+                    element.classList.remove('text-success')
+                    element.classList.add('text-muted')
+
+                    elementIcon.classList.remove('bi-check-circle-fill')
+                    elementIcon.classList.add('bi-dash-circle-fill')
+                }
             }
+            
+            const validate = (element, validationRegex) => {
+                const isValid = validationRegex.test(password)
+                
+                updateElementState(element, isValid)
+
+                return isValid
+            }
+
+            const minimumCharacterIsValid = validate(minimumCharacterRequirement, /.{8,}/)
+
+            const atLeast3IsValid = [
+                validate(uppercaseCharacterRequirement, /[A-Z]/),
+                validate(lowercaseCharacterRequirement, /[a-z]/),
+                validate(numbersRequirement, /[0-9]/),
+                validate(specialCharacterRequirement, /[^A-Za-z0-9]/)
+            ].reduce((count, isValid) => count + (isValid ? 1 : 0), 0) >= 3
+
+            updateElementState(atLeast3Requirement, atLeast3IsValid)
+
+            if (minimumCharacterIsValid && atLeast3IsValid) {
+                passwordErrorMessage = ''
+            } else {
+                passwordErrorMessage = 'La contraseña no es válida.'
+            }            
         }
 
         function validateConfirmPassword() {
@@ -207,7 +305,38 @@
             signUpButton.disabled = !nameIsValid() || !surnameIsValid() || !emailIsValid() || !passwordIsValid() || !confirmPasswordIsValid();
         }
 
+        const setupPasswordVisibility = (input) => {
+            const visibilityButton = input.parentElement.querySelector('button')
+            const visibilityIcon = visibilityButton.querySelector('i')
+
+            visibilityButton.addEventListener('mousedown', event => {
+                event.preventDefault()
+            })
+
+            visibilityButton.addEventListener('click', () => {
+                const selectionStart = input.selectionStart
+                const selectionEnd = input.selectionEnd
+
+                if (input.type == 'password') {
+                    input.type = 'text'
+                    visibilityIcon.classList.remove('bi-eye')
+                    visibilityIcon.classList.add('bi-eye-slash')
+                } else {
+                    input.type = 'password'
+                    visibilityIcon.classList.remove('bi-eye-slash')
+                    visibilityIcon.classList.add('bi-eye')
+                }
+
+                input.focus()
+                setTimeout(() => { input.setSelectionRange(selectionStart, selectionEnd) }, 0)
+            });
+        }
+
         nameInput.addEventListener('blur', () => {
+            if (!nameWasModified) {
+                return;
+            }
+
             validateName()
             setValidationState(nameInput, nameErrorMessage);
             updateButtonState()
@@ -217,9 +346,15 @@
             validateName()
             setValidationState(nameInput, '');
             updateButtonState()
+
+            nameWasModified = true
         });
 
         surnameInput.addEventListener('blur', () => {
+            if (!surnameWasModified) {
+                return;
+            }
+
             validateSurname()
             setValidationState(surnameInput, surnameErrorMessage);
             updateButtonState()
@@ -229,9 +364,15 @@
             validateSurname()
             setValidationState(surnameInput, '');
             updateButtonState()
+
+            surnameWasModified = true
         });
 
         emailInput.addEventListener('blur', () => {
+            if (!emailWasModified) {
+                return;
+            }
+
             validateEmail()
             setValidationState(emailInput, emailErrorMessage);
             updateButtonState()
@@ -241,9 +382,25 @@
             validateEmail()
             setValidationState(emailInput, '');
             updateButtonState()
+
+            emailWasModified = true
+        });
+
+        passwordInput.addEventListener('focus', () => {
+            if (!passwordIsValid()) {
+                passwordHelp.classList.remove('visually-hidden');
+            }
+            
+            setValidationState(passwordInput, '');
         });
 
         passwordInput.addEventListener('blur', () => {
+            passwordHelp.classList.add('visually-hidden');
+
+            if (!passwordWasModified) {
+                return;
+            }
+
             validatePassword()
             validateConfirmPassword()
 
@@ -260,12 +417,24 @@
             validatePassword()
             validateConfirmPassword()
 
+            if (passwordIsValid()) {
+                passwordHelp.classList.add('visually-hidden')
+            } else {
+                passwordHelp.classList.remove('visually-hidden')
+            }
+
             setValidationState(passwordInput, '');
             setValidationState(confirmPasswordInput, '');
             updateButtonState()
+
+            passwordWasModified = true
         });
 
         confirmPasswordInput.addEventListener('blur', () => {
+            if (!confirmPasswordWasModified) {
+                return;
+            }
+
             validateConfirmPassword()
             setValidationState(confirmPasswordInput, confirmPasswordErrorMessage);
             updateButtonState()
@@ -275,6 +444,17 @@
             validateConfirmPassword()
             setValidationState(confirmPasswordInput, '');
             updateButtonState()
+
+            confirmPasswordWasModified = true
         });
+    
+        validateName()
+        validateSurname()
+        validateEmail()
+        validatePassword()
+        validateConfirmPassword()
+        updateButtonState()
+        setupPasswordVisibility(passwordInput)
+        setupPasswordVisibility(confirmPasswordInput)
     </script>
 {% endblock %}
