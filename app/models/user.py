@@ -14,6 +14,7 @@ class User(Model):
     email: Mapped[str] = mapped_column(String(128), unique=True)
     password: Mapped[str] = mapped_column(String(256))
     surname: Mapped[str] = mapped_column(String(64))
+    information_is_public: Mapped[bool] = mapped_column(Boolean, default=True)
 
     name: Mapped[str] = mapped_column(Text)
     preferred_name: Mapped[Optional[str]] = mapped_column(Text)

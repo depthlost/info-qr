@@ -44,7 +44,23 @@
     </div>
   </div>
 
-  {% if user_is_authenticated() %}
+  {% if user %}
+    <div class="mb-4">
+      <label for="visibilitySelect" class="form-label">Visibilidad</label>
+      <select 
+        id="visibilitySelect"
+        class="form-select" 
+        aria-describedby="visibilityHelp"
+      >
+        <option value="public"{% if user.information_is_public %} selected{% endif %}>Público</option>
+        <option value="private"{% if not user.information_is_public %} selected{% endif %}>Privado</option>
+      </select>
+      <div id="visibilityHelp" class="form-text">
+        Al ser público, cualquier persona con tu código QR / ID  puede ver tu información.<br>
+        Al ser privado, solo tú puedes ver tu información.
+      </div>
+    </div>
+
     <div class="mb-4">
       <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal">
         Eliminar Cuenta
@@ -52,7 +68,7 @@
   {% endif %}
 </form>
 
-{% if user_is_authenticated() %}
+{% if user %}
     <div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteLabel" aria-hidden="true">
       <div class="modal-dialog" role="dialog" aria-modal="true">
         <div class="modal-content">
@@ -112,6 +128,37 @@
 
     updateTheme(theme)
     updateAppTheme(theme)
+  });
+
+  const visibilitySelect = document.getElementById('visibilitySelect');
+  let previousVisibilityValue = visibilitySelect.value
+
+  visibilitySelect.addEventListener('change', async (event) => {
+      const informationIsPublic = event.target.value == 'public'
+    
+      try {
+        const response = await fetch('{{ url_for("update_user") }}', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            user: {
+              information_is_public: informationIsPublic
+            }
+          })
+        });
+
+        if (!response.ok || !(await response.json()).success) {
+          throw new Error();
+        }
+
+        showToast(`Ahora tu información es ${informationIsPublic ? 'pública' : 'privada'}`, 'success')
+        previousVisibilityValue = visibilitySelect.value
+      } catch (error) {
+        showToast('No se pudo modificar la visibilidad', 'error')
+        visibilitySelect.value = previousVisibilityValue
+      }
   });
 </script>
 {% endblock %}

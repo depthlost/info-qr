@@ -10,6 +10,8 @@ class UserForm(BaseForm):
     class Meta:
         csrf = False
     
+    information_is_public = BooleanField()
+
     name = StringField(
         validators=[Length(max=64)],
         filters=[lambda input: input.strip() if isinstance(input, str) else input]

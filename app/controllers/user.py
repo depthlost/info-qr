@@ -73,14 +73,17 @@ def home_user(user_id):
     if not user:
         abort(404)
     elif user.id != get_authenticated_user_id():
-        return redirect(url_for("show_user", user_id=user.id))
+        if not user.information_is_public:
+            abort(404)
+        else:
+            return redirect(url_for("show_user", user_id=user.id))
 
     return render_template("home_user.html", user=user)
 
 def show_user(user_id):
     user = User.get(user_id)
 
-    if not user:
+    if not user or (user.id != get_authenticated_user_id() and not user.information_is_public):
         abort(404)
     
     return render_template("show_user_info.html", user=user, is_owner_user=user.id == get_authenticated_user_id())
