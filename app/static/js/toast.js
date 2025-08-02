@@ -21,8 +21,8 @@ const toastCategories = {
     }
 }
 
-function showToast(message, type = 'info', delay = 5000) {
-    const category = toastCategories[type]
+function showToast(message, type, delay = 5000) {
+    const category = toastCategories[type] || toastCategories.info
 
     const toastHtml = `
     <div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
@@ -31,7 +31,7 @@ function showToast(message, type = 'info', delay = 5000) {
         <strong class="me-auto">${category.title}</strong>
         <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Cerrar"></button>
         </div>
-        <div class="toast-body">${message}</div>
+        <div class="toast-body"></div>
     </div>`
 
     const container = document.getElementById('toastContainer')
@@ -39,6 +39,8 @@ function showToast(message, type = 'info', delay = 5000) {
 
     const toast = container.lastElementChild
     const options = delay > 0 ? { delay, autohide: true } : { autohide: false }
+    
+    toast.querySelector(".toast-body").textContent = message
     
     const bootstrapToast = new bootstrap.Toast(toast, options);
     bootstrapToast.show();
