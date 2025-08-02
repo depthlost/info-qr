@@ -1,7 +1,7 @@
 
 import io
 import qrcode
-from flask import current_app, render_template, abort, url_for, send_file, redirect
+from flask import current_app, render_template, abort, url_for, send_file, redirect, flash
 from werkzeug.security import generate_password_hash, check_password_hash
 from app.models import User
 from app.forms import SignUpForm, SignInForm
@@ -54,6 +54,16 @@ def authenticate():
 
 def sign_out():
     logout_user()
+    
+    return redirect(url_for("main"))
+
+def remove_account():
+    user = get_authenticated_user()
+
+    if user:
+        user.remove()
+        logout_user()
+        flash("La cuenta fue eliminada con éxito", "success")
     
     return redirect(url_for("main"))
 

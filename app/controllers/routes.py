@@ -3,7 +3,7 @@ from .main import main
 from .about import about
 from .help import help
 from .settings import settings
-from .user import sign_up, create_user, sign_in, authenticate, sign_out, home_user, show_user, get_user_qrcode
+from .user import sign_up, create_user, sign_in, authenticate, sign_out, remove_account, home_user, show_user, get_user_qrcode
 from .api.user import update_user
 from .api.medication import create_medication, update_medication, remove_medication
 from .api.contact import create_contact, update_contact, remove_contact
@@ -64,6 +64,12 @@ def set_routes(app):
         rule = "/usuario/cerrar_sesion",
         view_func = sign_out,
         methods=["GET"]
+    )
+
+    app.add_url_rule(
+        rule = "/usuario/eliminar_cuenta",
+        view_func = remove_account,
+        methods=["POST"]
     )
 
     app.add_url_rule(
