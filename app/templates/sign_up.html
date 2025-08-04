@@ -18,6 +18,7 @@
             class="form-control"
             id="name"
             name="name"
+            value="{{ form.name.data or '' }}"
             placeholder="Ejemplo: María"
             required
             aria-required="true"
@@ -33,6 +34,7 @@
             class="form-control"
             id="surname"
             name="surname"
+            value="{{ form.surname.data or '' }}"
             placeholder="Ejemplo: González"
             required
             aria-required="true"
@@ -47,6 +49,7 @@
             class="form-control"
             id="email"
             name="email"
+            value="{{ form.email.data or '' }}"
             placeholder="Ejemplo: mariagonzalez@gmail.com"
             required
             aria-required="true"
@@ -152,7 +155,9 @@
             <button id="signUp" class="btn btn-primary btn-lg w-50" type="submit">Registrarse</button>
         </div>
     </form>
+{% endblock %}
 
+{% block script %}
     <script>
         const nameInput = document.getElementById('name');
         const surnameInput = document.getElementById('surname');
@@ -456,5 +461,9 @@
         updateButtonState()
         setupPasswordVisibility(passwordInput)
         setupPasswordVisibility(confirmPasswordInput)
+
+        {% for field_name, errors in form.errors.items() %}
+            setValidationState({{ field_name }}Input, {{ errors | tojson }});
+        {% endfor %}
     </script>
 {% endblock %}
