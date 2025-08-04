@@ -5,6 +5,7 @@
         data-target="{{ target_id }}"
         aria-label="Editar contenido" 
         aria-describedby= "{{ label_id }}"
+        data-role="edit"
     >
         Editar
     </button>
@@ -14,14 +15,87 @@
             data-target="{{ target_id }}"
             aria-label="Guardar cambios"
             aria-describedby= "{{ label_id }}"
+            data-role="edit"
         >
-            Guardar
+            Guardar edición
         </button>
         <button 
             class="btn btn-danger btn-sm cancel-btn d-none" 
             data-target="{{ target_id }}"
             aria-label="Cancelar edición"
             aria-describedby= "{{ label_id }}"
+            data-role="edit"
+        >
+            Cancelar
+        </button>
+    </div>
+</div>
+{% endmacro %}
+
+
+{% macro add_button(target_id, label_id, template_id) %}
+<div class="d-flex justify-content-end">
+    <button 
+        class="btn btn-success btn-sm add-btn mb-3" 
+        data-target="{{ target_id }}"
+        aria-label="Agregar elemento" 
+        aria-describedby= "{{ label_id }}"
+        data-template="{{template_id}}"
+        data-role="add"
+    >
+        Agregar
+    </button>
+    <div class="btn-group mb-3" role="group">
+        <button 
+            class="btn btn-success btn-sm save-add-btn d-none" 
+            data-target="{{ target_id }}"
+            aria-label="Guardar el nuevo elemento"
+            aria-describedby= "{{ label_id }}"
+            data-role="add"
+        >
+            Guardar elemento
+        </button>
+        <button 
+            class="btn btn-danger btn-sm cancel-add-btn d-none" 
+            data-target="{{ target_id }}"
+            aria-label="Cancelar nuevo elemento"
+            aria-describedby= "{{ label_id }}"
+            data-role="add"
+        >
+            Cancelar
+        </button>
+    </div>
+</div>
+{% endmacro %}
+
+
+{% macro delete_buttons(target_id, label_id) %}
+<div class="d-flex justify-content-end">
+    <button 
+        class="btn btn-danger btn-sm delete-btn mb-3" 
+        data-target="{{ target_id }}"
+        aria-label="Eliminar elemento" 
+        aria-describedby= "{{ label_id }}"
+        data-role="delete"
+    >
+        Eliminar
+    </button>
+    <div class="btn-group mb-3" role="group">
+        <button 
+            class="btn btn-danger btn-sm confirm-del-btn d-none" 
+            data-target="{{ target_id }}"
+            aria-label="Confirmar eliminación"
+            aria-describedby= "{{ label_id }}"
+            data-role="delete"
+        >
+            Confirmar eliminar
+        </button>
+        <button 
+            class="btn btn-secondary btn-sm cancel-del-btn d-none" 
+            data-target="{{ target_id }}"
+            aria-label="Cancelar eliminación"
+            aria-describedby= "{{ label_id }}"
+            data-role="delete"
         >
             Cancelar
         </button>

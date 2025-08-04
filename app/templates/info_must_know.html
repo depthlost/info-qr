@@ -1,4 +1,6 @@
 {% import 'macros/edit_buttons.html' as edit_buttons %}
+{% from 'macros/contact_info.html' import contact_info %}
+{% from 'macros/medication_info.html' import medication_info %}
 
 <div class="border border-danger border-2 rounded p-3">
 
@@ -37,28 +39,111 @@
     <div class="bg-body-tertiary p-3 rounded-2" tabindex="0">
         <section aria-labelledby="datos_personales">
             <h3 id="datos_personales" class="h5 mb-3">Datos personales</h3>
-            <div class="border border-danger rounded p-3 mb-3" id="datos_personales_content" data-editable-list="true">
+            <div class="border border-danger rounded p-3 mb-3" id="datos_personales_content" data-type="user">
                 <dl class="row mb-0">
-                    <dt class="col-sm-3" id="label_nombre">Nombre</dt>
-                    <dd class="col-sm-9" data-type="text" data-field="nombre" data-label="label_nombre">{{ user.name }} {{ user.surname }}</dd>
+                    <dt class="col-sm-4" id="label_nombre">Nombre:</dt>
+                    <dd class="col-sm-8">
+                        <span class="view-mode">{{ user.name }}</span>
+                        {% if is_owner_user %}
+                        <input 
+                            type="text"
+                            class="form-control edit-mode d-none"
+                            aria-labelledby="label_nombre"
+                            name="name"
+                            value="{{ user.name }}">
+                        {% endif %}
+                    </dd>
 
-                    <dt class="col-sm-3" id="label_apodo">Me llaman</dt>
-                    <dd class="col-sm-9" data-type="text" data-field="apodo" data-label="label_apodo">-</dd>
+                    <dt class="col-sm-4" id="label_apellido">Apellido:</dt>
+                    <dd class="col-sm-8">
+                        <span class="view-mode">{{ user.surname }}</span>
+                        {% if is_owner_user %}
+                        <input 
+                            type="text"
+                            class="form-control edit-mode d-none"
+                            aria-labelledby="label_apellido"
+                            name="surname"
+                            value="{{ user.surname }}">
+                        {% endif %}
+                    </dd>
 
-                    <dt class="col-sm-3" id="label_obra_social">Obra Social-N°</dt>
-                    <dd class="col-sm-9" data-type="number" data-field="obra_social" data-label="label_obra_social">-</dd>
+                    <dt class="col-sm-4" id="label_apodo">Me llaman:</dt>
+                    <dd class="col-sm-8">
+                        <span class="view-mode">{{ user.preferred_name or "-" }}</span>
+                        {% if is_owner_user %}
+                        <input 
+                            type="text"
+                            class="form-control edit-mode d-none"
+                            aria-labelledby="label_apodo"
+                            name="preferred_name"
+                            value="">
+                        {% endif %}
+                    </dd>
 
-                    <dt class="col-sm-3" id="label_nacimiento">Fecha de nacimiento</dt>
-                    <dd class="col-sm-9" data-type="date" data-field="fecha_nacimiento" data-label="label_nacimiento">-</dd>
+                    <dt class="col-sm-4" id="label_obra_social">Obra Social-N°:</dt>
+                    <dd class="col-sm-8">
+                        <span class="view-mode">{{ user.insurance_number or "-"}}</span>
+                        {% if is_owner_user %}
+                        <input 
+                            type="number"
+                            class="form-control edit-mode d-none"
+                            aria-labelledby="label_obra_social"
+                            name="insurance_number"
+                            value="">
+                        {% endif %}
+                    </dd>
+      
+                    <dt class="col-sm-4" id="label_nacimiento">Fecha de nacimiento:</dt>
+                    <dd class="col-sm-8">
+                        <span class="view-mode">{{ user.birthdate or "-"}}</span>
+                        {% if is_owner_user %}
+                        <input 
+                            type="date"
+                            class="form-control edit-mode d-none"
+                            aria-labelledby="label_nacimiento"
+                            name="birthdate"
+                            value="">
+                        {% endif %}
+                    </dd>
 
-                    <dt class="col-sm-3" id="label_direccion">Dirección</dt>
-                    <dd class="col-sm-9" data-type="text" data-field="direccion" data-label="label_direccion">-</dd>
+                    <dt class="col-sm-4" id="label_direccion">Dirección:</dt>
+                    <dd class="col-sm-8">
+                        <span class="view-mode">{{ user.address or "-"}}</span>
+                        {% if is_owner_user %}
+                        <input 
+                            type="text"
+                            class="form-control edit-mode d-none"
+                            aria-labelledby="label_direccion"
+                            name="address"
+                            value="">
+                        {% endif %}
+                    </dd>
                     
-                    <dt class="col-sm-3" id="label_telefono">Teléfono</dt>
-                    <dd class="col-sm-9" data-type="tel" data-field="telefono" data-label="label_telefono">-</dd>
+                    <dt class="col-sm-4" id="label_telefono">Teléfono:</dt>
+                    <dd class="col-sm-8">
+                        <span class="view-mode">{{ user.phone or "-"}}</span>
+                        {% if is_owner_user %}
+                        <input 
+                            type="tel"
+                            class="form-control edit-mode d-none"
+                            aria-labelledby="label_telefono"
+                            name="phone"
+                            value="">
+                        {% endif %}
+                    </dd>
 
-                    <dt class="col-sm-3" id="label_nacionalidad">Nacionalidad</dt>
-                    <dd class="col-sm-9" data-type="text" data-field="nacionalidad" data-label="label_nacionalidad">-</dd>
+                    <dt class="col-sm-4" id="label_nacionalidad">Nacionalidad:</dt>
+                    <dd class="col-sm-8">
+                        <span class="view-mode">{{ user.nationality or "-" }}</span>
+                        {% if is_owner_user %}
+                        <input 
+                            type="text"
+                            class="form-control edit-mode d-none"
+                            aria-labelledby="label_nacionalidad"
+                            name="nationality"
+                            value="{{ user.nationality }}">
+                        {% endif %}
+                    </dd>
                 </dl>
             </div>
             {% if is_owner_user %}
@@ -71,22 +156,42 @@
             <h3 class="h5" id="comunicacion">Comunicación</h3>
             <h4 class="h6" id="lenguaje">¿Qué lenguaje hablo?</h4>
             <div 
-                class="border border-danger rounded mb-3 p-3" 
                 id="lenguaje_content"
-                aria-describedby="lenguaje"
-            > 
+                data-type="user">
+                <p 
+                    class="border border-danger rounded view-mode mb-3 p-3" 
+                    aria-labelledby="lenguaje"
+                    style="white-space: pre-wrap;"
+                >{{ user.spoken_language or ""}}</p>
+                {% if is_owner_user %}
+                <textarea 
+                    class="form-control border border-danger rounded autosize edit-mode d-none mb-3 p-3" 
+                    name="spoken_language"
+                    placeholder="Escriba aquí..."></textarea>
+                {% endif %}
             </div>
             {% if is_owner_user %}
                 {{ edit_buttons.buttons("lenguaje_content", "lenguaje") }}
             {% endif %}
 
             <h4 class="h6" id="como_comunico">¿Cómo me comunico?</h4>
-            <p class="mb-1">Ejemplos: uso de comunicadores, respuesta Si/No, Tablet, aplicaciones, etc</p>
+            <p class="mb-1" id="como_comunico_desc">Ejemplos: uso de comunicadores, respuesta Si/No, Tablet, aplicaciones, etc</p>
             <div 
-                class="border border-danger rounded mb-3 p-3" 
                 id="como_comunico_content"
-                aria-describedby="como_comunico"
-            > 
+                data-type="user">
+                <p 
+                    class="border border-danger rounded view-mode mb-3 p-3" 
+                    aria-labelledby="como_comunico"
+                    style="white-space: pre-wrap;"
+                >{{ user.communication_method or ""}}</p>
+                {% if is_owner_user %}
+                <textarea 
+                    class="form-control border border-danger rounded autosize edit-mode d-none mb-3 p-3" 
+                    name="communication_method"
+                    placeholder="Escriba aquí..."
+                    aria-labelledby="como_comunico"
+                    aria-describedby="como_comunico_desc"></textarea>
+                {% endif %}
             </div>
             {% if is_owner_user %}
                 {{ edit_buttons.buttons("como_comunico_content", "como_comunico") }}
@@ -94,21 +199,59 @@
 
             <h4 class="h6" id="necesito_asistente">¿Necesito un asistente para comunicarme?</h4>
             <div 
-                class="border border-danger rounded mb-3 p-3" 
                 id="necesito_asistente_content"
-                aria-describedby="necesito_asistente"
-            >
+                data-type="user">
+                <span 
+                    class="border border-danger rounded view-mode mb-3 p-3 d-block w-100" 
+                    aria-labelledby="necesito_asistente">
+                    {% if user.needs_communication_assistant is true %}
+                        SI
+                    {% elif user.needs_communication_assistant is false %}
+                        NO
+                    {% else %}
+                        
+                    {% endif %}
+                </span>
+                {% if is_owner_user %}
+                <select 
+                    class="form-select border border-danger rounded edit-mode d-none mb-3 p-3"
+                    name="needs_communication_assistant" 
+                    aria-labelledby="necesito_asistente">
+                    <option value="" {% if user.needs_communication_assistant is none %} selected {% endif %} disabled>-- Seleccionar --</option>
+                    <option value="true" {% if user.needs_communication_assistant is true %} selected {% endif %}>SI</option>
+                    <option value="false" {% if user.needs_communication_assistant is false %} selected {% endif %}>NO</option>
+                </select>
+                {% endif %}
             </div>
             {% if is_owner_user %}
                 {{ edit_buttons.buttons("necesito_asistente_content", "necesito_asistente") }}
             {% endif %}
 
             <h4 class="h6" id="necesito_apoyo">¿Necesito de una de mis personas de apoyo permanentemente durante toda consulta/intervenciones/internación?</h4>
-            <div 
-                class="border border-danger rounded mb-3 p-3" 
+            <div
                 id="necesito_apoyo_content"
-                aria-describedby="necesito_apoyo"
-            >
+                data-type="user">
+                <span
+                    class="border border-danger rounded view-mode mb-3 p-3 d-block w-100" 
+                    aria-labelledby="necesito_apoyo">
+                    {% if user.needs_continuous_support is true %}
+                        SI
+                    {% elif user.needs_continuous_support is false %}
+                        NO
+                    {% else %}
+                        
+                    {% endif %}
+                </span>
+                {% if is_owner_user %}
+                <select 
+                    class="form-select border border-danger rounded edit-mode d-none mb-3 p-3"
+                    name="needs_continuous_support" 
+                    aria-labelledby="necesito_apoyo">
+                    <option value="" {% if user.needs_continuous_support is none %} selected {% endif %} disabled>-- Seleccionar --</option>
+                    <option value="true" {% if user.needs_continuous_support is true %} selected {% endif %}>SI</option>
+                    <option value="false" {% if user.needs_continuous_support is false %} selected {% endif %}>NO</option>
+                </select>
+                {% endif %}
             </div>
             {% if is_owner_user %}
                 {{ edit_buttons.buttons("necesito_apoyo_content", "necesito_apoyo") }}
@@ -118,20 +261,12 @@
 
         <section aria-labelledby="contacto_cercano">
             <h3 class="h5" id="contacto_cercano">Datos de contacto de la persona más cercana a mí:</h3>
-            <div class="border border-danger rounded p-3 mb-3" id="contacto_cercano_content" data-editable-list="true">
-                <dl class="row mb-0">
-                    <dt class="col-sm-3" id="label_contacto_nombre">Nombre</dt>
-                    <dd class="col-sm-9" data-type="text" data-field="contacto_nombre" data-label="label_contacto_nombre">-</dd>
-
-                    <dt class="col-sm-3" id="label_contacto_relacion">Relación</dt>
-                    <dd class="col-sm-9" data-type="text" data-field="contacto_relacion" data-label="label_contacto_relacion">-</dd>
-
-                    <dt class="col-sm-3" id="label_contacto_direccion">Dirección</dt>
-                    <dd class="col-sm-9" data-type="text" data-field="contacto_direccion" data-label="label_contacto_direccion">-</dd>
-                    
-                    <dt class="col-sm-3" id="label_contacto_telefono">Celular</dt>
-                    <dd class="col-sm-9" data-type="tel" data-field="contacto_telefono" data-label="label_contacto_telefono">-</dd>
-                </dl>
+            <div 
+                class="border border-danger rounded p-3 mb-3" 
+                id="contacto_cercano_content" 
+                data-type="contact"
+                data-element-id="{{ user.emergency_contact.id }}">
+                {{ contact_info(user.emergency_contact, is_owner_user, true)}}
             </div>
             {% if is_owner_user %}
                 {{ edit_buttons.buttons("contacto_cercano_content", "contacto_cercano") }}
@@ -141,29 +276,50 @@
 
         <section aria-labelledby="acompañante">
             <h3 class="h5" id="acompañante">Quién me acompaña durante la internación:</h3>
-            <div class="border border-danger rounded p-3 mb-3" id="acompañante_content" data-editable-list="true">
-                <dl class="row mb-0">
-                    <dt class="col-sm-3" id="label_acompañante1_nombre">Nombre</dt>
-                    <dd class="col-sm-9" data-type="text" data-field="acompañante1_nombre" data-label="label_acompañante1_nombre">-</dd>
-
-                    <dt class="col-sm-3" id="label_acompañante1_direccion">Dirección</dt>
-                    <dd class="col-sm-9" data-type="text" data-field="acompañante1_direccion" data-label="label_acompañante1_direccion">-</dd>
-                    
-                    <dt class="col-sm-3" id="label_acompañante1_telefono">Celular</dt>
-                    <dd class="col-sm-9" data-type="tel" data-field="acompañante1_telefono" data-label="label_acompañante1_telefono">-</dd>
-
-                    <dt class="col-sm-3 mt-3" id="label_acompañante2_nombre">Nombre</dt>
-                    <dd class="col-sm-9 mt-3" data-type="text" data-field="acompañante2_nombre" data-label="label_acompañante2_nombre">-</dd>
-
-                    <dt class="col-sm-3" id="label_acompañante2_direccion">Dirección</dt>
-                    <dd class="col-sm-9" data-type="text" data-field="acompañante2_direccion" data-label="label_acompañante2_direccion">-</dd>
-                    
-                    <dt class="col-sm-3" id="label_acompañante2_telefono">Celular</dt>
-                    <dd class="col-sm-9" data-type="tel" data-field="acompañante2_telefono" data-label="label_acompañante2_telefono">-</dd>
-                </dl>
+            <div 
+                class="border border-danger rounded p-3 mb-3 pb-0 list-container" 
+                id="acompañante_content">
+                {% for contact in user.support_persons %}
+                <section aria-labelledby="acompañante_{{ contact.id }}" class="list-item" data-elem="acompañante" data-index="{{ loop.index }}">
+                    {% if not loop.first%}
+                    <hr class="mt-0 mb-3 border border-danger" aria-hidden="true">
+                    {% endif %}
+                    <h5 class="h6" id="acompañante_{{ contact.id }}">Acompañante {{ loop.index }}:</h5>
+                    <div  
+                        class="ms-3 item-content"    
+                        id="acompañante_{{ contact.id }}_content"
+                        data-type="contact"
+                        data-element-id="{{ contact.id }}">
+                        {{ contact_info(contact, is_owner_user)}}
+                    </div>
+                    <div class="d-flex justify-content-end gap-3">
+                        {% if is_owner_user %}
+                        {{ edit_buttons.delete_buttons("acompañante_" ~ contact.id ~ "_content", "acompañante_" ~ contact.id) }}
+                        {{ edit_buttons.buttons("acompañante_" ~ contact.id ~ "_content", "acompañante_" ~ contact.id) }}
+                        {% endif %}
+                    </div>
+                </section>
+            {% endfor %}
             </div>
             {% if is_owner_user %}
-                {{ edit_buttons.buttons("acompañante_content", "acompañante") }}
+            <template id="acompañante_template">
+                <section aria-labelledby="acompañante_X" class="list-item editing" data-elem="acompañante">
+                    <hr class="mt-0 mb-3 border border-danger" aria-hidden="true">
+                    <h5 class="h6" id="acompañante_X">Nuevo acompañante:</h5>
+                    <div  
+                        class="ms-3 item-content"    
+                        id="acompañante_X_content"
+                        data-type="contact"
+                        data-contact-type="support_persons">
+                        {{ contact_info({}, true)}}
+                    </div>
+                    <div class="d-flex justify-content-end gap-3 edit-btns d-none">
+                        {{ edit_buttons.delete_buttons("acompañante_X_content", "acompañante_X") }}
+                        {{ edit_buttons.buttons("acompañante_X_content", "acompañante_X") }}
+                    </div>
+                </section>
+            </template>
+            {{ edit_buttons.add_button("acompañante_content", "acompañante", "acompañante_template") }}
             {% endif %}
         </section>
 
@@ -171,21 +327,41 @@
         <section aria-labelledby="religion">
             <h3 class="h5" id="religion">Religión:</h3>
             <div 
-                class="border border-danger rounded mb-3 p-3" 
                 id="religion_content"
-                aria-describedby="religion"
-            >
+                data-type="user">
+                <p 
+                    class="border border-danger rounded view-mode mb-3 p-3" 
+                    aria-labelledby="como_comunico"
+                    style="white-space: pre-wrap;"
+                >{{ user.religion or ""}}</p>
+                {% if is_owner_user %}
+                <textarea 
+                    class="form-control border border-danger rounded autosize edit-mode d-none mb-3 p-3" 
+                    name="religion"
+                    placeholder="Escriba aquí..."
+                    aria-labelledby="religion"></textarea>
+                {% endif %}
             </div>
             {% if is_owner_user %}
                 {{ edit_buttons.buttons("religion_content", "religion") }}
             {% endif %}
 
             <h4 class="h6" id="necesidad_religiosa">Necesidades Religiosas o espirituales: </h4>
-            <div 
-                class="border border-danger rounded mb-3 p-3" 
+            <div
                 id="necesidad_religiosa_content"
-                aria-describedby="necesidad_religiosa"
-            >
+                data-type="user">
+                <p 
+                    class="border border-danger rounded view-mode mb-3 p-3" 
+                    aria-labelledby="necesidad_religiosa"
+                    style="white-space: pre-wrap;"
+                >{{ user.spiritual_needs or "" }}</p>
+                {% if is_owner_user %}
+                <textarea 
+                    class="form-control border border-danger rounded autosize edit-mode d-none mb-3 p-3" 
+                    name="spiritual_needs"
+                    placeholder="Escriba aquí..."
+                    aria-labelledby="necesidad_religiosa"></textarea>
+                {% endif %}
             </div>
             {% if is_owner_user %}
                 {{ edit_buttons.buttons("necesidad_religiosa_content", "necesidad_religiosa") }}
@@ -197,17 +373,12 @@
             <h3 class="h5" id="profesionales">Profesionales relacionados a mí</h3>
             <section aria-labelledby="medico_cabecera">
                 <h4 class="h6" id="medico_cabecera">Médico de cabecera:</h4>
-                <div class="border border-danger rounded p-3 mb-3" id="medico_cabecera_content" data-editable-list="true">
-                    <dl class="row mb-0">
-                        <dt class="col-sm-3" id="label_medico_nombre">Nombre</dt>
-                        <dd class="col-sm-9" data-type="text" data-field="medico_nombre" data-label="label_medico_nombre">-</dd>
-
-                        <dt class="col-sm-3" id="label_medico_direccion">Dirección</dt>
-                        <dd class="col-sm-9" data-type="text" data-field="medico_direccion" data-label="label_medico_direccion">-</dd>
-                        
-                        <dt class="col-sm-3" id="label_medico_telefono">Teléfono</dt>
-                        <dd class="col-sm-9" data-type="tel" data-field="medico_telefono" data-label="label_medico_telefono">-</dd>
-                    </dl>
+                <div 
+                    class="border border-danger rounded p-3 mb-3" 
+                    id="medico_cabecera_content" 
+                    data-type="contact"
+                    data-element-id="{{ user.primary_care_physician.id }}">
+                    {{ contact_info(user.primary_care_physician, is_owner_user)}}
                 </div>
                 {% if is_owner_user %}
                 {{ edit_buttons.buttons("medico_cabecera_content", "medico_cabecera") }}
@@ -216,13 +387,49 @@
 
             <h4 class="h6" id="otros_profesionales">Otros profesionales que tienen relación conmigo:</h4>
             <div 
-                class="border border-danger rounded mb-3 p-3" 
-                id="otros_profesionales_content"
-                aria-describedby="otros_profesionales"
-            >
+                class="border border-danger rounded mb-3 p-3 pb-0 list-container" 
+                id="otros_profesionales_content">
+                {% for contact in user.other_professionals %}
+                <section aria-labelledby="profesional_{{ contact.id }}" class="list-item" data-elem="profesional" data-index="{{ loop.index }}">
+                    {% if not loop.first%}
+                    <hr class="mt-0 mb-3 border border-danger" aria-hidden="true">
+                    {% endif %}
+                    <h5 class="h6" id="profesional_{{ contact.id }}">Profesional {{ loop.index }}:</h5>
+                    <div  
+                        class="ms-3 item-content"    
+                        id="profesional_{{ contact.id }}_content"
+                        data-type="contact"
+                        data-element-id="{{ contact.id }}">
+                        {{ contact_info(contact, is_owner_user)}}
+                    </div>
+                    <div class="d-flex justify-content-end gap-3">
+                        {% if is_owner_user %}
+                        {{ edit_buttons.delete_buttons("profesional_" ~ contact.id ~ "_content", "profesional_" ~ contact.id) }}
+                        {{ edit_buttons.buttons("profesional_" ~ contact.id ~ "_content", "profesional_" ~ contact.id) }}
+                        {% endif %}
+                    </div>
+                </section>
+                {% endfor %}
             </div>
             {% if is_owner_user %}
-                {{ edit_buttons.buttons("otros_profesionales_content", "otros_profesionales") }}
+            <template id="profesional_template">
+                <section aria-labelledby="profesional_X" class="list-item editing" data-elem="profesional">
+                    <hr class="mt-0 mb-3 border border-danger" aria-hidden="true">
+                    <h5 class="h6" id="profesional_X">Nuevo profesional:</h5>
+                    <div  
+                        class="ms-3 item-content"    
+                        id="profesional_X_content"
+                        data-type="contact"
+                        data-contact-type="other_professionals">
+                        {{ contact_info({}, true)}}
+                    </div>
+                    <div class="d-flex justify-content-end gap-3 edit-btns d-none">
+                        {{ edit_buttons.delete_buttons("profesional_X_content", "profesional_X") }}
+                        {{ edit_buttons.buttons("profesional_X_content", "profesional_X") }}
+                    </div>
+                </section>
+            </template>
+            {{ edit_buttons.add_button("otros_profesionales_content", "otros_profesionales", "profesional_template") }}
             {% endif %}
         </section>
 
@@ -230,11 +437,21 @@
         <section aria-labelledby="alergias">
             <h3 class="h5" id="alergias">Alergias</h3>
             <div 
-                    class="border border-danger rounded mb-3 p-3" 
-                    id="alergias_content"
-                    aria-describedby="alergias"
-                >
-                </div>
+                id="alergias_content"
+                data-type="user">
+                <p 
+                    class="border border-danger rounded view-mode mb-3 p-3" 
+                    aria-labelledby="alergias"
+                    style="white-space: pre-wrap;"
+                >{{ user.allergies or ""}}</p>
+                {% if is_owner_user %}
+                <textarea 
+                    class="form-control border border-danger rounded autosize edit-mode d-none mb-3 p-3" 
+                    name="allergies"
+                    placeholder="Escriba aquí..."
+                    aria-labelledby="alergias"></textarea>
+                {% endif %}
+            </div>
             {% if is_owner_user %}
                 {{ edit_buttons.buttons("alergias_content", "alergias") }}
             {% endif %}
@@ -244,24 +461,46 @@
         <section aria-labelledby="intervenciones">
             <h3 class="h5" id="intervenciones">Intervenciones</h3>
             <h4 class="h6" id="como_intervenir"> Cómo hacerme las Intervenciones Médicas:</h4>
-            <p class="mb-1"> Ejemplos: Cómo sacarme sangre, darme inyecciones, tomarme la presión etc.</p>
+            <p class="mb-1" id="como_intervenir_desc"> Ejemplos: Cómo sacarme sangre, darme inyecciones, tomarme la presión etc.</p>
             <div 
-                class="border border-danger rounded mb-3 p-3" 
                 id="como_intervenir_content"
-                aria-describedby="como_intervenir"
-            >
+                data-type="user">
+                <p 
+                    class="border border-danger rounded view-mode mb-3 p-3" 
+                    aria-labelledby="como_intervenir"
+                    style="white-space: pre-wrap;"
+                >{{ user.medical_procedure_instructions or ""}}</p>
+                {% if is_owner_user %}
+                <textarea 
+                    class="form-control border border-danger rounded autosize edit-mode d-none mb-3 p-3" 
+                    name="medical_procedure_instructions"
+                    placeholder="Escriba aquí..."
+                    aria-labelledby="como_intervenir"
+                    aria-describedby="como_intervenir_desc"></textarea>
+                {% endif %}
             </div>
             {% if is_owner_user %}
                 {{ edit_buttons.buttons("como_intervenir_content", "como_intervenir") }}
             {% endif %}
 
             <h4 class="h6" id="como_dar_alimento">Cómo deben darme los líquidos y los solídos:</h4>
-            <p class="mb-1">Ejemplo: Triturados porque tengo riesgo de atragantarme, disfagia (comer, beber y tragar), etc</p>
+            <p class="mb-1" id="como_dar_alimento_desc">Ejemplo: Triturados porque tengo riesgo de atragantarme, disfagia (comer, beber y tragar), etc</p>
             <div 
-                class="border border-danger rounded mb-3 p-3" 
                 id="como_dar_alimento_content"
-                aria-describedby="como_dar_alimento"
-            >
+                data-type="user">
+                <p 
+                    class="border border-danger rounded view-mode mb-3 p-3" 
+                    aria-labelledby="como_dar_alimento"
+                    style="white-space: pre-wrap;"
+                >{{ user.feeding_instructions or ""}}</p>
+                {% if is_owner_user %}
+                <textarea 
+                    class="form-control border border-danger rounded autosize edit-mode d-none mb-3 p-3" 
+                    name="feeding_instructions"
+                    placeholder="Escriba aquí..."
+                    aria-labelledby="como_dar_alimento"
+                    aria-describedby="como_dar_alimento_desc"></textarea>
+                {% endif %}
             </div>
             {% if is_owner_user %}
                 {{ edit_buttons.buttons("como_dar_alimento_content", "como_dar_alimento") }}
@@ -273,53 +512,70 @@
             <h3 class="h5" id="medicacion">Medicación</h3>
             <section aria-labelledby="medicacion_actual">
                 <h4 class="h6" id="medicacion_actual">Medicación actual:</h4>
-                <div class="border border-danger rounded p-3 mb-3" id="medicacion_actual_content" data-editable-list="true">
-                    <dl class="row mb-0">
-                        <dt id="label_medicamento1">1. Medicamento:</dt>
-                        <dt class="col-sm-3" id="label_nombre_medicamento1">Nombre</dt>
-                        <dd class="col-sm-9" data-type="text" data-field="medicamento1_nombre" data-label="label_medicamento1 label_nombre_medicamento1">-</dd>
-                        <dt class="col-sm-3" id="label_dosis_medicamento1">Dosis</dt>
-                        <dd class="col-sm-9" data-type="text" data-field="medicamento1_dosis" data-label="label_medicamento1 label_dosis_medicamento1">-</dd>
-                        <dt class="col-sm-3" id="label_horario_medicamento1">Horario</dt>
-                        <dd class="col-sm-9" data-type="text" data-field="medicamento1_horario" data-label="label_medicamento1 label_horario_medicamento1">-</dd>
-
-                        <dt id="label_medicamento2">2. Medicamento:</dt>
-                        <dt class="col-sm-3" id="label_nombre_medicamento2">Nombre</dt>
-                        <dd class="col-sm-9" data-type="text" data-field="medicamento2_nombre" data-label="label_medicamento2 label_nombre_medicamento2">-</dd>
-                        <dt class="col-sm-3" id="label_dosis_medicamento2">Dosis</dt>
-                        <dd class="col-sm-9" data-type="text" data-field="medicamento2_dosis" data-label="label_medicamento2 label_dosis_medicamento2">-</dd>
-                        <dt class="col-sm-3" id="label_horario_medicamento2">Horario</dt>
-                        <dd class="col-sm-9" data-type="text" data-field="medicamento2_horario" data-label="label_medicamento2 label_horario_medicamento2">-</dd>
-
-                        <dt id="label_medicamento3">3. Medicamento:</dt>
-                        <dt class="col-sm-3" id="label_nombre_medicamento3">Nombre</dt>
-                        <dd class="col-sm-9" data-type="text" data-field="medicamento3_nombre" data-label="label_medicamento3 label_nombre_medicamento3">-</dd>
-                        <dt class="col-sm-3" id="label_dosis_medicamento3">Dosis</dt>
-                        <dd class="col-sm-9" data-type="text" data-field="medicamento3_dosis" data-label="label_medicamento3 label_dosis_medicamento3">-</dd>
-                        <dt class="col-sm-3" id="label_horario_medicamento3">Horario</dt>
-                        <dd class="col-sm-9" data-type="text" data-field="medicamento3_horario" data-label="label_medicamento3 label_horario_medicamento3">-</dd>
-
-                        <dt id="label_medicamento4">4. Medicamento:</dt>
-                        <dt class="col-sm-3" id="label_nombre_medicamento4">Nombre</dt>
-                        <dd class="col-sm-9" data-type="text" data-field="medicamento4_nombre" data-label="label_medicamento4 label_nombre_medicamento4">-</dd>
-                        <dt class="col-sm-3" id="label_dosis_medicamento4">Dosis</dt>
-                        <dd class="col-sm-9" data-type="text" data-field="medicamento4_dosis" data-label="label_medicamento4 label_dosis_medicamento4">-</dd>
-                        <dt class="col-sm-3" id="label_horario_medicamento4">Horario</dt>
-                        <dd class="col-sm-9" data-type="text" data-field="medicamento4_horario" data-label="label_medicamento4 label_horario_medicamento4">-</dd>
-                    </dl>
+                <div 
+                    class="border border-danger rounded p-3 mb-3 pb-0 list-container" 
+                    id="medicacion_actual_content">
+                    {% for medication in user.medications %}
+                    <section aria-labelledby="medicacion_{{ medication.id }}" class="list-item" data-elem="medicacion" data-index="{{ loop.index }}">
+                        {% if not loop.first%}
+                        <hr class="mt-0 mb-3 border border-danger" aria-hidden="true">
+                        {% endif %}
+                        <h5 class="h6" id="medicacion_{{ medication.id }}">Medicacion {{ loop.index }}:</h5>
+                        <div  
+                            class="ms-3 item-content"    
+                            id="medicacion_{{ medication.id }}_content"
+                            data-type="medication"
+                            data-element-id="{{ medication.id }}">
+                            {{ medication_info(medication, is_owner_user)}}
+                        </div>
+                        <div class="d-flex justify-content-end gap-3">
+                            {% if is_owner_user %}
+                            {{ edit_buttons.delete_buttons("medicacion_" ~ medication.id ~ "_content", "medicacion_" ~ medication.id) }}
+                            {{ edit_buttons.buttons("medicacion_" ~ medication.id ~ "_content", "medicacion_" ~ medication.id) }}
+                            {% endif %}
+                        </div>
+                    </section>
+                    {% endfor %}
                 </div>
                 {% if is_owner_user %}
-                {{ edit_buttons.buttons("medicacion_actual_content", "medicacion_actual") }}
+                <template id="medication_template">
+                    <section aria-labelledby="medicacion_X" class="list-item editing" data-elem="medicacion">
+                        <hr class="mt-0 mb-3 border border-danger" aria-hidden="true">
+                        <h5 class="h6" id="medicacion_X">Nuevo medicamento:</h5>
+                        <div  
+                            class="ms-3 item-content"    
+                            id="medicacion_X_content"
+                            data-type="medication">
+                            {{ medication_info({}, true)}}
+                        </div>
+                        <div class="d-flex justify-content-end gap-3 edit-btns d-none">
+                            {{ edit_buttons.delete_buttons("medicacion_X_content", "medicacion_X") }}
+                            {{ edit_buttons.buttons("medicacion_X_content", "medicacion_X") }}
+                        </div>
+                    </section>
+                </template>
+                {{ edit_buttons.add_button("medicacion_actual_content", "medicacion_actual", "medication_template") }}
                 {% endif %}
             </section>
 
             <h4 class="h6" id="como_tomo_medicina">¿Cómo la tomo?</h4>
-            <p class="mb-1">Ejemplos: molida y disuelta, en jarabe, con jeringa, con cuchara común, trago comprimidos enteros, etc</p>
-            <div 
-                class="border border-danger rounded mb-3 p-3" 
+            <p class="mb-1" id="como_tomo_medicina_desc">Ejemplos: molida y disuelta, en jarabe, con jeringa, con cuchara común, trago comprimidos enteros, etc</p>
+            <div  
                 id="como_tomo_medicina_content"
-                aria-describedby="como_tomo_medicina"
-            >
+                data-type="user">
+                <p 
+                    class="border border-danger rounded view-mode mb-3 p-3" 
+                    aria-labelledby="como_dar_alimento"
+                    style="white-space: pre-wrap;"
+                >{{ user.how_to_take_medication or ""}}</p>
+                {% if is_owner_user %}
+                <textarea 
+                    class="form-control border border-danger rounded autosize edit-mode d-none mb-3 p-3" 
+                    name="how_to_take_medication"
+                    placeholder="Escriba aquí..."
+                    aria-labelledby="como_tomo_medicina"
+                    aria-describedby="como_tomo_medicina_desc"></textarea>
+                {% endif %}
             </div>
             {% if is_owner_user %}
                 {{ edit_buttons.buttons("como_tomo_medicina_content", "como_tomo_medicina") }}
@@ -327,22 +583,43 @@
 
             <h4 class="h6" id="posicion_medicina">¿Tienen que dármelo en alguna posición determinada? ¿Cuál?</h4>
             <div 
-                class="border border-danger rounded mb-3 p-3" 
                 id="posicion_medicina_content"
-                aria-describedby="posicion_medicina"
-            >
+                data-type="user">
+                <p 
+                    class="border border-danger rounded view-mode mb-3 p-3" 
+                    aria-labelledby="posicion_medicina"
+                    style="white-space: pre-wrap;"
+                >{{ user.position_for_medication or ""}}</p>
+                {% if is_owner_user %}
+                <textarea 
+                    class="form-control border border-danger rounded autosize edit-mode d-none mb-3 p-3" 
+                    name="position_for_medication"
+                    placeholder="Escriba aquí..."
+                    aria-labelledby="posicion_medicina"></textarea>
+                {% endif %}
             </div>
             {% if is_owner_user %}
                 {{ edit_buttons.buttons("posicion_medicina_content", "posicion_medicina") }}
             {% endif %}
 
             <h4 class="h6" id="con_que_tomo"> ¿Con qué tomo los comprimidos, o el jarabe?</h4>
-            <p class="mb-1">Ejemplo: Tiene que ser cerca o lejos de las comidas, etc.</p>
-            <div 
-                class="border border-danger rounded mb-3 p-3" 
+            <p class="mb-1" id="con_que_tomo_desc">Ejemplo: Tiene que ser cerca o lejos de las comidas, etc.</p>
+            <div  
                 id="con_que_tomo_content"
-                aria-describedby="con_que_tomo"
-            >
+                data-type="user">
+                <p 
+                    class="border border-danger rounded view-mode mb-3 p-3" 
+                    aria-labelledby="con_que_tomo"
+                    style="white-space: pre-wrap;"
+                >{{ user.take_medication_with or ""}}</p>
+                {% if is_owner_user %}
+                <textarea 
+                    class="form-control border border-danger rounded autosize edit-mode d-none mb-3 p-3" 
+                    name="take_medication_with"
+                    placeholder="Escriba aquí..."
+                    aria-labelledby="con_que_tomo"
+                    aria-describedby="con_que_tomo_desc"></textarea>
+                {% endif %}
             </div>
             {% if is_owner_user %}
                 {{ edit_buttons.buttons("con_que_tomo_content", "con_que_tomo") }}
@@ -355,10 +632,29 @@
 
             <h4 class="h6" id="tengo_crisis"> Tengo epilepsia:</h4>
             <div 
-                class="border border-danger rounded mb-3 p-3" 
                 id="tengo_crisis_content"
-                aria-describedby="tengo_crisis"
-            >
+                data-type="user">   
+                <span 
+                    class="border border-danger rounded view-mode mb-3 p-3 d-block w-100" 
+                    aria-labelledby="tengo_crisis">
+                    {% if user.has_epilepsy is true %}
+                        SI
+                    {% elif user.has_epilepsy is false %}
+                        NO
+                    {% else %}
+                        
+                    {% endif %}
+                </span>
+                {% if is_owner_user %}
+                <select 
+                    class="form-select border border-danger rounded edit-mode d-none mb-3 p-3"
+                    name="has_epilepsy" 
+                    aria-labelledby="tengo_crisis">
+                    <option value="" {% if user.has_epilepsy is none %} selected {% endif %} disabled>-- Seleccionar --</option>
+                    <option value="true" {% if user.has_epilepsy is true %} selected {% endif %}>SI</option>
+                    <option value="false" {% if user.has_epilepsy is false %} selected {% endif %}>NO</option>
+                </select>
+                {% endif %}
             </div>
             {% if is_owner_user %}
                 {{ edit_buttons.buttons("tengo_crisis_content", "tengo_crisis") }}
@@ -366,21 +662,41 @@
 
             <h4 class="h6" id="descripcion_crisis">¿Cómo son mis crisis convulsivas?</h4>
             <div 
-                class="border border-danger rounded mb-3 p-3" 
                 id="descripcion_crisis_content"
-                aria-describedby="descripcion_crisis"
-            >
+                data-type="user">
+                <p 
+                    class="border border-danger rounded view-mode mb-3 p-3" 
+                    aria-labelledby="descripcion_crisis"
+                    style="white-space: pre-wrap;"
+                >{{ user.convulsive_crisis_description or ""}}</p>
+                {% if is_owner_user %}
+                <textarea 
+                    class="form-control border border-danger rounded autosize edit-mode d-none mb-3 p-3" 
+                    name="convulsive_crisis_description"
+                    placeholder="Escriba aquí..."
+                    aria-labelledby="descripcion_crisis"></textarea>
+                {% endif %}
             </div>
             {% if is_owner_user %}
                 {{ edit_buttons.buttons("descripcion_crisis_content", "descripcion_crisis") }}
             {% endif %}
 
-            <h4 class="h6" id="otras_crisis"> Tengo otro tipo de crisis debido a hipersensibilidad sensorial, etc. <br> ¿Cómo son estas crisis no convulsivas</h4>
+            <h4 class="h6" id="otras_crisis"> Tengo otro tipo de crisis debido a hipersensibilidad sensorial, etc. <br> ¿Cómo son estas crisis no convulsivas?</h4>
             <div 
-                class="border border-danger rounded mb-3 p-3" 
                 id="otras_crisis_content"
-                aria-describedby="otros"
-            >
+                data-type="user">
+                <p 
+                    class="border border-danger rounded view-mode mb-3 p-3" 
+                    aria-labelledby="otras_crisis"
+                    style="white-space: pre-wrap;"
+                >{{ user.non_convulsive_crisis_description or ""}}</p>
+                {% if is_owner_user %}
+                <textarea 
+                    class="form-control border border-danger rounded autosize edit-mode d-none mb-3 p-3" 
+                    name="non_convulsive_crisis_description"
+                    placeholder="Escriba aquí..."
+                    aria-labelledby="otras_crisis"></textarea>
+                {% endif %}
             </div>
             {% if is_owner_user %}
                 {{ edit_buttons.buttons("otras_crisis_content", "otras_crisis") }}
@@ -391,10 +707,20 @@
         <section aria-labelledby="otros">
             <h3 class="h5" id="otros">Otros datos que deben saber:</h3>
             <div 
-                class="border border-danger rounded mb-3 p-3" 
                 id="otros_content"
-                aria-describedby="otros"
-            >
+                data-type="user">
+                <p 
+                    class="border border-danger rounded view-mode mb-3 p-3" 
+                    aria-labelledby="otros"
+                    style="white-space: pre-wrap;"
+                >{{ user.other_relevant_info or ""}}</p>
+                {% if is_owner_user %}
+                <textarea 
+                    class="form-control border border-danger rounded autosize edit-mode d-none mb-3 p-3" 
+                    name="other_relevant_info"
+                    placeholder="Escriba aquí..."
+                    aria-labelledby="otros"></textarea>
+                {% endif %}
             </div>
             {% if is_owner_user %}
                 {{ edit_buttons.buttons("otros_content", "otros") }}

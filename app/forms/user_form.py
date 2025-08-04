@@ -16,6 +16,10 @@ class UserForm(BaseForm):
         validators=[Length(max=64)],
         filters=[lambda input: input.strip() if isinstance(input, str) else input]
     )
+    surname = StringField(
+        validators=[Length(max=64)],
+        filters=[lambda input: input.strip() if isinstance(input, str) else input]
+    )
     preferred_name = OptionalStringField(validators=[Length(max=64)])
     insurance_number = OptionalStringField(validators=[Length(max=128)])
     birthdate = DateField(format="%Y-%m-%d", validators=[Optional(), Birthdate()])

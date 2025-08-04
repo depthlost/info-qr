@@ -1,0 +1,57 @@
+{% macro contact_info(contact, is_owner_user=false, show_relation=false) %}
+<dl class="row mb-0">
+    <dt class="col-sm-3" id="label_contacto_nombre">Nombre</dt>
+    <dd class="col-sm-9">
+        <span class="view-mode">{{ contact.name or "-"}}</span>
+        {% if is_owner_user %}
+        <input 
+            type="text" 
+            class="form-control edit-mode d-none" 
+            aria-labelledby="label_contacto_nombre"
+            name="name"
+            value="{{ contact.name or '' }}">
+        {% endif %}
+    </dd>
+
+    {% if show_relation %}
+    <dt class="col-sm-3" id="label_contacto_relacion">Relación</dt>
+    <dd class="col-sm-9">
+        <span class="view-mode">{{ contact.relation or "-"}}</span>
+        {% if is_owner_user %}
+        <input 
+            type="text" 
+            class="form-control edit-mode d-none" 
+            aria-labelledby="label_contacto_relacion"
+            name="relation" 
+            value="{{ contact.relation or '' }}">
+        {% endif %}
+    </dd>
+    {% endif %}
+    
+    <dt class="col-sm-3" id="label_contacto_direccion">Dirección</dt>
+    <dd class="col-sm-9">
+        <span class="view-mode">{{ contact.address or "-"}}</span>
+        {% if is_owner_user %}
+        <input 
+            type="text"
+            class="form-control edit-mode d-none"
+            aria-labelledby="label_contacto_direccion"
+            name="address"
+            value="{{ contact.address or '' }}">
+        {% endif %}
+    </dd>
+
+    <dt class="col-sm-3" id="label_contacto_telefono">Teléfono</dt>
+    <dd class="col-sm-9">
+        <span class="view-mode">{{ contact.phone or "-"}}</span>
+        {% if is_owner_user %}
+        <input 
+            type="tel"
+            class="form-control edit-mode d-none"
+            aria-labelledby="label_contacto_telefono"
+            name="phone"
+            value="{{ contact.phone or '' }}">
+        {% endif %}
+    </dd>
+</dl>
+{% endmacro %}

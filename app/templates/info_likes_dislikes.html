@@ -33,11 +33,21 @@
         <section aria-labelledby="me_gusta">
             <h3 class="h5" id="me_gusta">Me gusta</h3>
             <p class="h6">Por favor hagan esto:</p>
-            <div 
-                class="border border-success rounded mb-3 p-3" 
+            <div  
                 id="me_gusta_content"
-                aria-describedby="me_gusta"
-            >
+                data-type="user">
+                <p 
+                    class="border border-success rounded view-mode mb-3 p-3" 
+                    aria-labelledby="me_gusta"
+                    style="white-space: pre-wrap;"
+                >{{ user.likes or ""}}</p>
+                {% if is_owner_user %}
+                <textarea 
+                    class="form-control border border-success rounded autosize edit-mode d-none mb-3 p-3" 
+                    name="likes"
+                    placeholder="Escriba aquí..."
+                    aria-labelledby="me_gusta"></textarea>
+                {% endif %}
             </div>
             {% if is_owner_user %}
                 {{ edit_buttons.buttons("me_gusta_content", "me_gusta") }}
@@ -49,10 +59,20 @@
             <h3 class="h5" id="no_me_gusta">NO me gusta</h3>
             <p class="h6">Por favor NO hagan esto:</p>
             <div 
-                class="border border-success rounded mb-3 p-3" 
                 id="no_me_gusta_content"
-                aria-describedby="no_me_gusta"
-            >
+                data-type="user"> 
+                <p 
+                    class="border border-success rounded view-mode mb-3 p-3" 
+                    aria-labelledby="no_me_gusta"
+                    style="white-space: pre-wrap;"
+                >{{ user.dislikes or ""}}</p>
+                {% if is_owner_user %}
+                <textarea 
+                    class="form-control border border-success rounded autosize edit-mode d-none mb-3 p-3" 
+                    name="dislikes"
+                    placeholder="Escriba aquí..."
+                    aria-labelledby="no_me_gusta"></textarea>
+                {% endif %}
             </div>
             {% if is_owner_user %}
                 {{ edit_buttons.buttons("no_me_gusta_content", "no_me_gusta") }}
@@ -63,10 +83,21 @@
         <section aria-labelledby="notas">
             <h3 class="h5" id="notas">Notas</h3>
             <div 
-                class="border border-success rounded mb-3 p-3" 
                 id="notas_content" 
-                aria-describedby="notas"
-            ></div>
+                data-type="user">
+                <p 
+                    class="border border-success rounded view-mode mb-3 p-3" 
+                    aria-labelledby="notas"
+                    style="white-space: pre-wrap;"
+                >{{ user.notes or ""}}</p>
+                {% if is_owner_user %}
+                <textarea 
+                    class="form-control border border-success rounded autosize edit-mode d-none mb-3 p-3" 
+                    name="notes"
+                    placeholder="Escriba aquí..."
+                    aria-labelledby="notas"></textarea>
+                {% endif %} 
+            </div>
             {% if is_owner_user %}
                 {{ edit_buttons.buttons("notas_content", "notas") }}
             {% endif %}
@@ -76,10 +107,20 @@
         <section class="content-section" role="region" aria-labelledby="contactos">
             <h3 class="h5" id="contactos">Contactos y sitios útiles</h3>
             <div 
-                class="border border-success rounded mb-3 p-3" 
                 id="contactos_content"
-                aria-describedby="contactos"
-            >
+                data-type="user">
+                <p 
+                    class="border border-success rounded view-mode mb-3 p-3" 
+                    aria-labelledby="contactos"
+                    style="white-space: pre-wrap;"
+                >{{ user.useful_contacts_and_sites or ""}}</p>
+                {% if is_owner_user %}
+                <textarea 
+                    class="form-control border border-success rounded autosize edit-mode d-none mb-3 p-3" 
+                    name="useful_contacts_and_sites"
+                    placeholder="Escriba aquí..."
+                    aria-labelledby="contactos"></textarea>
+                {% endif %}  
             </div>
             {% if is_owner_user %}
                 {{ edit_buttons.buttons("contactos_content", "contactos") }}

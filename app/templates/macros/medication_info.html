@@ -1,0 +1,42 @@
+{% macro medication_info(medication, is_owner_user=false) %}
+<dl class="row mb-0">
+    <dt class="col-sm-3" id="label_medicacion_nombre">Nombre</dt>
+    <dd class="col-sm-9">
+        <span class="view-mode">{{ medication.name or "-"}}</span>
+        {% if is_owner_user %}
+        <input 
+            type="text" 
+            class="form-control edit-mode d-none" 
+            aria-labelledby="label_medicacion_nombre"
+            name="name"
+            value="{{ medication.name or '' }}">
+        {% endif %}
+    </dd>
+    
+    <dt class="col-sm-3" id="label_medicacion_dosis">Dosis</dt>
+    <dd class="col-sm-9">
+        <span class="view-mode">{{ medication.dosage or "-"}}</span>
+        {% if is_owner_user %}
+        <input 
+            type="text"
+            class="form-control edit-mode d-none"
+            aria-labelledby="label_medicacion_dosis"
+            name="dosage"
+            value="{{ medication.dosage or '' }}">
+        {% endif %}
+    </dd>
+
+    <dt class="col-sm-3" id="label_medicacion_horario">Horario</dt>
+    <dd class="col-sm-9">
+        <span class="view-mode">{{ medication.schedule or "-"}}</span>
+        {% if is_owner_user %}
+        <input 
+            type="text"
+            class="form-control edit-mode d-none"
+            aria-labelledby="label_medicacion_horario"
+            name="schedule"
+            value="{{ medication.schedule or '' }}">
+        {% endif %}
+    </dd>
+</dl>
+{% endmacro %}

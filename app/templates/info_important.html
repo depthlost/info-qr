@@ -40,10 +40,20 @@
         <section aria-labelledby="estoy_ansioso">
             <h3 class="h5" id="estoy_ansioso">¿Qué necesito que hagan si estoy ansiosa/ansioso?</h3>
             <div 
-                class="border border-warning rounded p-3 mb-3"
                 id="estoy_ansioso_content"
-                aria-describedby="estoy_ansioso"
-            >
+                data-type="user">
+                <p 
+                    class="border border-warning rounded view-mode mb-3 p-3" 
+                    aria-labelledby="estoy_ansioso"
+                    style="white-space: pre-wrap;"
+                >{{ user.anxiety_care_instructions or "" }}</p>
+                {% if is_owner_user %}
+                <textarea 
+                    class="form-control border border-warning rounded autosize edit-mode d-none mb-3 p-3" 
+                    name="anxiety_care_instructions"
+                    placeholder="Escriba aquí..."
+                    aria-labelledby="estoy_ansioso"></textarea>
+                {% endif %}
             </div>
             {% if is_owner_user %}
                 {{ edit_buttons.buttons("estoy_ansioso_content", "estoy_ansioso") }}
@@ -54,10 +64,20 @@
         <section aria-labelledby="estoy_dolorido">
             <h3 class="h5" id="estoy_dolorido">¿Cómo te das cuenta de que estoy dolorida/dolorido?</h3>
             <div 
-                class="border border-warning rounded p-3 mb-3"
                 id="estoy_dolorido_content"
-                aria-describedby="estoy_dolorido"
-            >
+                data-type="user">
+                <p 
+                    class="border border-warning rounded view-mode mb-3 p-3" 
+                    aria-labelledby="estoy_dolorido"
+                    style="white-space: pre-wrap;"
+                >{{ user.pain_detection_cues or ""}}</p>
+                {% if is_owner_user %}
+                <textarea 
+                    class="form-control border border-warning rounded autosize edit-mode d-none mb-3 p-3" 
+                    name="pain_detection_cues"
+                    placeholder="Escriba aquí..."
+                    aria-labelledby="estoy_dolorido"></textarea>
+                {% endif %}
             </div>
             {% if is_owner_user %}
                 {{ edit_buttons.buttons("estoy_dolorido_content", "estoy_dolorido") }}
@@ -68,10 +88,20 @@
         <section aria-labelledby="estoy_asustado">
             <h3 class="h5" id="estoy_asustado">¿Cómo te das cuenta que estoy asustada/asustado?</h3>
             <div 
-                class="border border-warning rounded p-3 mb-3"
                 id="estoy_asustado_content"
-                aria-describedby="estoy_asustado"
-            >
+                data-type="user">
+                <p 
+                    class="border border-warning rounded view-mode mb-3 p-3" 
+                    aria-labelledby="estoy_asustado"
+                    style="white-space: pre-wrap;"
+                >{{ user.fear_detection_cues or ""}}</p>
+                {% if is_owner_user %}
+                <textarea 
+                    class="form-control border border-warning rounded autosize edit-mode d-none mb-3 p-3" 
+                    name="fear_detection_cues"
+                    placeholder="Escriba aquí..."
+                    aria-labelledby="estoy_asustado"></textarea>
+                {% endif %}
             </div>
             {% if is_owner_user %}
                 {{ edit_buttons.buttons("estoy_asustado_content", "estoy_asustado") }}
@@ -82,10 +112,20 @@
         <section aria-labelledby="estoy_enojado">
             <h3 class="h5" id="estoy_enojado">¿Cómo te das cuenta que estoy enojada/enojado?</h3>
             <div 
-                class="border border-warning rounded p-3 mb-3"
                 id="estoy_enojado_content"
-                aria-describedby="estoy_enojado"
-            >
+                data-type="user">
+                <p 
+                    class="border border-warning rounded view-mode mb-3 p-3" 
+                    aria-labelledby="estoy_enojado"
+                    style="white-space: pre-wrap;"
+                >{{ user.anger_detection_cues or ""}}</p>
+                {% if is_owner_user %}
+                <textarea 
+                    class="form-control border border-warning rounded autosize edit-mode d-none mb-3 p-3" 
+                    name="anger_detection_cues"
+                    placeholder="Escriba aquí..."
+                    aria-labelledby="estoy_enojado"></textarea>
+                {% endif %}
             </div>
             {% if is_owner_user %}
                 {{ edit_buttons.buttons("estoy_enojado_content", "estoy_enojado") }}
@@ -95,12 +135,23 @@
 
         <section aria-labelledby="como_comunicarse">
             <h3 class="h5" id="como_comunicarse">Cómo comunicarse conmigo:</h3>
-            <p class="mb-1">Ejemplos: Ubicación del interlocutor, hablar en voz baja/alta, hablar con lentitud, repetir las cosas, etc</p>
+            <p class="mb-1" id="como_comunicarse_desc">Ejemplos: Ubicación del interlocutor, hablar en voz baja/alta, hablar con lentitud, repetir las cosas, etc</p>
             <div 
-                class="border border-warning rounded p-3 mb-3"
                 id="como_comunicarse_content"
-                aria-describedby="como_comunicarse"
-            >
+                data-type="user">
+                <p 
+                    class="border border-warning rounded view-mode mb-3 p-3" 
+                    aria-labelledby="como_comunicarse"
+                    style="white-space: pre-wrap;"
+                >{{ user.communication_instructions or ""}}</p>
+                {% if is_owner_user %}
+                <textarea 
+                    class="form-control border border-warning rounded autosize edit-mode d-none mb-3 p-3" 
+                    name="communication_instructions"
+                    placeholder="Escriba aquí..."
+                    aria-labelledby="como_comunicarse"
+                    aria-describedby="como_comunicarse_desc"></textarea>
+                {% endif %}
             </div>
             {% if is_owner_user %}
                 {{ edit_buttons.buttons("como_comunicarse_content", "como_comunicarse") }}
@@ -110,12 +161,23 @@
 
         <section aria-labelledby="movilidad">
             <h3 class="h5" id="movilidad">Movilidad:</h3>
-            <p class="mb-1">Ejemplos: Postura en la cama, andador, etc.</p>
+            <p class="mb-1" id="movilidad_desc">Ejemplos: Postura en la cama, andador, etc.</p>
             <div 
-                class="border border-warning rounded p-3 mb-3"
                 id="movilidad_content"
-                aria-describedby="movilidad"
-            >
+                data-type="user">
+                <p 
+                    class="border border-warning rounded view-mode mb-3 p-3" 
+                    aria-labelledby="movilidad"
+                    style="white-space: pre-wrap;"
+                >{{ user.mobility or ""}}</p>
+                {% if is_owner_user %}
+                <textarea 
+                    class="form-control border border-warning rounded autosize edit-mode d-none mb-3 p-3" 
+                    name="mobility"
+                    placeholder="Escriba aquí..."
+                    aria-labelledby="movilidad"
+                    aria-describedby="movilidad_desc"></textarea>
+                {% endif %}
             </div>
             {% if is_owner_user %}
                 {{ edit_buttons.buttons("movilidad_content", "movilidad") }}
@@ -124,12 +186,23 @@
 
         <section aria-labelledby="cuidad_personal">
             <h3 class="h5" id="cuidad_personal">Cuidado personal:</h3>
-            <p class="mb-1"> Ejemplos: Vestido, higiene, etc.</p>
+            <p class="mb-1" id="cuidad_personal_desc"> Ejemplos: Vestido, higiene, etc.</p>
             <div 
-                class="border border-warning rounded p-3 mb-3"
                 id="cuidad_personal_content"
-                aria-describedby="cuidad_personal"
-            >
+                data-type="user">
+                <p 
+                    class="border border-warning rounded view-mode mb-3 p-3" 
+                    aria-labelledby="cuidad_personal"
+                    style="white-space: pre-wrap;"
+                >{{ user.personal_care or ""}}</p>
+                {% if is_owner_user %}
+                <textarea 
+                    class="form-control border border-warning rounded autosize edit-mode d-none mb-3 p-3" 
+                    name="personal_care"
+                    placeholder="Escriba aquí..."
+                    aria-labelledby="cuidad_personal"
+                    aria-describedby="cuidad_personal_desc"></textarea>
+                {% endif %}
             </div>
             {% if is_owner_user %}
                 {{ edit_buttons.buttons("cuidad_personal_content", "cuidad_personal") }}
@@ -139,12 +212,23 @@
 
         <section aria-labelledby="vista_oido">
             <h3 class="h5" id="vista_oido">Problemas de Vista/Oído:</h3>
-            <p class="mb-1">Ejemplos: dificultad para ver de lejos, uso de audífonos, etc.</p>
+            <p class="mb-1" id="vista_oido_desc">Ejemplos: dificultad para ver de lejos, uso de audífonos, etc.</p>
             <div 
-                class="border border-warning rounded p-3 mb-3"
                 id="vista_oido_content"
-                aria-describedby="vista_oido"
-            >
+                data-type="user">
+                <p 
+                    class="border border-warning rounded view-mode mb-3 p-3" 
+                    aria-labelledby="vista_oido"
+                    style="white-space: pre-wrap;"
+                >{{ user.vision_hearing or ""}}</p>
+                {% if is_owner_user %}
+                <textarea 
+                    class="form-control border border-warning rounded autosize edit-mode d-none mb-3 p-3" 
+                    name="vision_hearing"
+                    placeholder="Escriba aquí..."
+                    aria-labelledby="vista_oido"
+                    aria-describedby="vista_oido_desc"></textarea>
+                {% endif %}
             </div>
             {% if is_owner_user %}
                 {{ edit_buttons.buttons("vista_oido_content", "vista_oido") }}
@@ -154,12 +238,23 @@
 
         <section aria-labelledby="como_como">
             <h3 class="h5" id="como_como">Cómo como:</h3>
-            <p class="mb-1">Ejemplos: Alimento cortado, procesado, riesgo de ahogo, ayuda para comer, gastrostomía</p>
+            <p class="mb-1" id="como_como_desc">Ejemplos: Alimento cortado, procesado, riesgo de ahogo, ayuda para comer, gastrostomía</p>
             <div 
-                class="border border-warning rounded p-3 mb-3"
                 id="como_como_content"
-                aria-describedby="como_como"
-            >
+                data-type="user">
+                <p 
+                    class="border border-warning rounded view-mode mb-3 p-3" 
+                    aria-labelledby="como_como"
+                    style="white-space: pre-wrap;"
+                >{{ user.eating_instructions or ""}}</p>
+                {% if is_owner_user %}
+                <textarea 
+                    class="form-control border border-warning rounded autosize edit-mode d-none mb-3 p-3" 
+                    name="eating_instructions"
+                    placeholder="Escriba aquí..."
+                    aria-labelledby="como_como"
+                    aria-describedby="como_como_desc"></textarea>
+                {% endif %}
             </div>
             {% if is_owner_user %}
                 {{ edit_buttons.buttons("como_como_content", "como_como") }}
@@ -169,12 +264,23 @@
 
         <section aria-labelledby="como_bebo">
             <h3 class="h5" id="como_bebo"> Cómo bebo:</h3>
-            <p class="mb-1">Ejemplos: Bebo en pequeños tragos, líquidos espesados, etc</p>
+            <p class="mb-1" id="como_bebo_desc">Ejemplos: Bebo en pequeños tragos, líquidos espesados, etc</p>
             <div 
-                class="border border-warning rounded p-3 mb-3"
                 id="como_bebo_content"
-                aria-describedby="como_bebo"
-            >
+                data-type="user">
+                <p 
+                    class="border border-warning rounded view-mode mb-3 p-3" 
+                    aria-labelledby="como_bebo"
+                    style="white-space: pre-wrap;"
+                >{{ user.drinking_instructions or ""}}</p>
+                {% if is_owner_user %}
+                <textarea 
+                    class="form-control border border-warning rounded autosize edit-mode d-none mb-3 p-3" 
+                    name="drinking_instructions"
+                    placeholder="Escriba aquí..."
+                    aria-labelledby="como_bebo"
+                    aria-describedby="como_bebo_desc"></textarea>
+                {% endif %}
             </div>
             {% if is_owner_user %}
                 {{ edit_buttons.buttons("como_bebo_content", "como_bebo") }}
@@ -184,12 +290,23 @@
         
         <section aria-labelledby="seguridad">
             <h3 class="h5" id="seguridad">Mi seguridad: </h3>
-            <p class="mb-1">Ejemplos: barandas en la cama, apoyos para momentos de crisis de conducta, etc</p>
+            <p class="mb-1" id="seguridad_desc">Ejemplos: barandas en la cama, apoyos para momentos de crisis de conducta, etc</p>
             <div 
-                class="border border-warning rounded p-3 mb-3"
                 id="seguridad_content"
-                aria-describedby="seguridad"
-            >
+                data-type="user">
+                <p 
+                    class="border border-warning rounded view-mode mb-3 p-3" 
+                    aria-labelledby="seguridad"
+                    style="white-space: pre-wrap;"
+                >{{ user.safety_measures or ""}}</p>
+                {% if is_owner_user %}
+                <textarea 
+                    class="form-control border border-warning rounded autosize edit-mode d-none mb-3 p-3" 
+                    name="safety_measures"
+                    placeholder="Escriba aquí..."
+                    aria-labelledby="seguridad"
+                    aria-describedby="seguridad_desc"></textarea>
+                {% endif %}
             </div>
             {% if is_owner_user %}
                 {{ edit_buttons.buttons("seguridad_content", "seguridad") }}
@@ -199,12 +316,23 @@
 
         <section aria-labelledby="baño">
             <h3 class="h5" id="baño">Cómo uso el baño:</h3>
-            <p class="mb-1"> Ejemplos: pañales, ayuda para ir al baño, etc</p>
+            <p class="mb-1" id="baño_desc"> Ejemplos: pañales, ayuda para ir al baño, etc</p>
             <div 
-                class="border border-warning rounded p-3 mb-3"
                 id="baño_content"
-                aria-describedby="baño"
-            >
+                data-type="user">
+                <p 
+                    class="border border-warning rounded view-mode mb-3 p-3" 
+                    aria-labelledby="baño"
+                    style="white-space: pre-wrap;"
+                >{{ user.toileting or ""}}</p>
+                {% if is_owner_user %}
+                <textarea 
+                    class="form-control border border-warning rounded autosize edit-mode d-none mb-3 p-3" 
+                    name="toileting"
+                    placeholder="Escriba aquí..."
+                    aria-labelledby="baño"
+                    aria-describedby="baño_desc"></textarea>
+                {% endif %}
             </div>
             {% if is_owner_user %}
                 {{ edit_buttons.buttons("baño_content", "baño") }}
@@ -214,12 +342,23 @@
 
         <section aria-labelledby="descanso">
             <h3 class="h5" id="descanso">Dormir y descansar:</h3>
-            <p class="mb-1">Ejemplo: horarios de descanso/rutina</p>
+            <p class="mb-1" id="descanso_desc">Ejemplo: horarios de descanso/rutina</p>
             <div 
-                class="border border-warning rounded p-3 mb-3"
                 id="descanso_content"
-                aria-describedby="descanso"
-            >
+                data-type="user">
+                <p 
+                    class="border border-warning rounded view-mode mb-3 p-3" 
+                    aria-labelledby="descanso"
+                    style="white-space: pre-wrap;"
+                >{{ user.sleep_rest_routine or ""}}</p>
+                {% if is_owner_user %}
+                <textarea 
+                    class="form-control border border-warning rounded autosize edit-mode d-none mb-3 p-3" 
+                    name="sleep_rest_routine"
+                    placeholder="Escriba aquí..."
+                    aria-labelledby="descanso"
+                    aria-describedby="descanso_desc"></textarea>
+                {% endif %}
             </div>
             {% if is_owner_user %}
                 {{ edit_buttons.buttons("descanso_content", "descanso") }}
