@@ -29,7 +29,9 @@
             Las credenciales no son válidas.
         </div>
     {% endif %}
+{% endblock %}
 
+{% block script %}
     <script>
         const emailInput = document.getElementById('email');
         const passwordInput = document.getElementById('password');
@@ -37,11 +39,11 @@
 
         let emailIsValid = false
         let emailErrorMessage = ''
+        let emailWasModified = false
 
         let passwordIsValid = false
         let passwordErrorMessage = ''
-
-        updateButtonState()
+        let passwordWasModified = false
 
         function validateEmail() {
             const email = emailInput.value.trim();
@@ -69,46 +71,62 @@
             passwordIsValid = passwordErrorMessage === '';
         }
 
-    function setValidationState(input, errorMessage) {
-        const errorDiv = document.getElementById(input.id + 'Error');
-        
-        if (errorMessage) {
-            input.classList.add('is-invalid');
-            input.setAttribute('aria-invalid', 'true');
-            errorDiv.textContent = errorMessage;
-        } else {
-            input.classList.remove('is-invalid');
-            input.setAttribute('aria-invalid', 'false');
-            errorDiv.textContent = '';
+        function setValidationState(input, errorMessage) {
+            const errorDiv = document.getElementById(input.id + 'Error');
+            
+            if (errorMessage) {
+                input.classList.add('is-invalid');
+                input.setAttribute('aria-invalid', 'true');
+                errorDiv.textContent = errorMessage;
+            } else {
+                input.classList.remove('is-invalid');
+                input.setAttribute('aria-invalid', 'false');
+                errorDiv.textContent = '';
+            }
         }
-    }
 
-    function updateButtonState() {
-      signInButton.disabled = !emailIsValid || !passwordIsValid;
-    }
+        function updateButtonState() {
+        signInButton.disabled = !emailIsValid || !passwordIsValid;
+        }
 
-    emailInput.addEventListener('blur', () => {
+        emailInput.addEventListener('blur', () => {
+            if (!emailWasModified) {
+                return;
+            }
+
+            validateEmail()
+            setValidationState(emailInput, emailErrorMessage);
+            updateButtonState()
+        });
+
+        emailInput.addEventListener('input', () => {
+            validateEmail()
+            setValidationState(emailInput, '');
+            updateButtonState()
+
+            emailWasModified = true
+        });
+
+        passwordInput.addEventListener('blur', () => {
+            if (!passwordWasModified) {
+                return;
+            }
+
+            validatePassword()
+            setValidationState(passwordInput, passwordErrorMessage);
+            updateButtonState()
+        });
+
+        passwordInput.addEventListener('input', () => {
+            validatePassword()
+            setValidationState(passwordInput, '');
+            updateButtonState()
+
+            passwordWasModified = true
+        });
+        
         validateEmail()
-        setValidationState(emailInput, emailErrorMessage);
-        updateButtonState()
-    });
-
-    emailInput.addEventListener('input', () => {
-        validateEmail()
-        setValidationState(emailInput, '');
-        updateButtonState()
-    });
-
-    passwordInput.addEventListener('blur', () => {
         validatePassword()
-        setValidationState(passwordInput, passwordErrorMessage);
         updateButtonState()
-    });
-
-    passwordInput.addEventListener('input', () => {
-        validatePassword()
-        setValidationState(passwordInput, '');
-        updateButtonState()
-    });
     </script>
 {% endblock %}
