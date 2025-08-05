@@ -50,8 +50,8 @@
         function copyUUID() {
             const text = "{{ user.id }}";
             navigator.clipboard.writeText(text)
-                .then(() => alert("Código copiado al portapapeles"))
-                .catch(() => alert("Error al copiar el código"));
+                .then(() => showToast("Código copiado al portapapeles", "success"))
+                .catch(() => showToast("Error al copiar el código", "error"));
         }
 
         document.getElementById('shareButton').addEventListener('click', async () => {
