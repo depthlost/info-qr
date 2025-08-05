@@ -10,6 +10,7 @@
             aria-labelledby="label_medicacion_nombre"
             name="name"
             value="{{ medication.name or '' }}">
+        <div class="invalid-feedback edit-mode d-none"></div>
         {% endif %}
     </dd>
     
@@ -23,6 +24,7 @@
             aria-labelledby="label_medicacion_dosis"
             name="dosage"
             value="{{ medication.dosage or '' }}">
+        <div class="invalid-feedback edit-mode d-none"></div>
         {% endif %}
     </dd>
 
@@ -36,6 +38,7 @@
             aria-labelledby="label_medicacion_horario"
             name="schedule"
             value="{{ medication.schedule or '' }}">
+        <div class="invalid-feedback edit-mode d-none"></div>
         {% endif %}
     </dd>
 </dl>

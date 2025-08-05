@@ -1,6 +1,6 @@
 {% import 'macros/edit_buttons.html' as edit_buttons %}
 
-<div class="border border-warning border-2 rounded p-3">
+<div class="tema-importante border-2 rounded p-3">
     <div class="row px-3 mb-3">
         <div class="col-md-10">
             <h2 class="h3">Lo que es IMPORTANTE para mí</h2>
@@ -33,7 +33,7 @@
         </div>
     </div>
 
-    <hr class="my-2 border border-warning">
+    <hr class="my-2 tema-importante">
 
     <div class="bg-body-tertiary p-3 rounded-2" tabindex="0">
         
@@ -43,16 +43,17 @@
                 id="estoy_ansioso_content"
                 data-type="user">
                 <p 
-                    class="border border-warning rounded view-mode mb-3 p-3" 
+                    class="tema-importante rounded view-mode mb-3 p-3" 
                     aria-labelledby="estoy_ansioso"
                     style="white-space: pre-wrap;"
                 >{{ user.anxiety_care_instructions or "" }}</p>
                 {% if is_owner_user %}
                 <textarea 
-                    class="form-control border border-warning rounded autosize edit-mode d-none mb-3 p-3" 
+                    class="form-control tema-importante rounded autosize edit-mode d-none mb-3 p-3" 
                     name="anxiety_care_instructions"
                     placeholder="Escriba aquí..."
                     aria-labelledby="estoy_ansioso"></textarea>
+                <div class="invalid-feedback edit-mode d-none"></div>
                 {% endif %}
             </div>
             {% if is_owner_user %}
@@ -67,16 +68,17 @@
                 id="estoy_dolorido_content"
                 data-type="user">
                 <p 
-                    class="border border-warning rounded view-mode mb-3 p-3" 
+                    class="tema-importante rounded view-mode mb-3 p-3" 
                     aria-labelledby="estoy_dolorido"
                     style="white-space: pre-wrap;"
                 >{{ user.pain_detection_cues or ""}}</p>
                 {% if is_owner_user %}
                 <textarea 
-                    class="form-control border border-warning rounded autosize edit-mode d-none mb-3 p-3" 
+                    class="form-control tema-importante rounded autosize edit-mode d-none mb-3 p-3" 
                     name="pain_detection_cues"
                     placeholder="Escriba aquí..."
                     aria-labelledby="estoy_dolorido"></textarea>
+                <div class="invalid-feedback edit-mode d-none"></div>
                 {% endif %}
             </div>
             {% if is_owner_user %}
@@ -91,16 +93,17 @@
                 id="estoy_asustado_content"
                 data-type="user">
                 <p 
-                    class="border border-warning rounded view-mode mb-3 p-3" 
+                    class="tema-importante rounded view-mode mb-3 p-3" 
                     aria-labelledby="estoy_asustado"
                     style="white-space: pre-wrap;"
                 >{{ user.fear_detection_cues or ""}}</p>
                 {% if is_owner_user %}
                 <textarea 
-                    class="form-control border border-warning rounded autosize edit-mode d-none mb-3 p-3" 
+                    class="form-control tema-importante rounded autosize edit-mode d-none mb-3 p-3" 
                     name="fear_detection_cues"
                     placeholder="Escriba aquí..."
                     aria-labelledby="estoy_asustado"></textarea>
+                <div class="invalid-feedback edit-mode d-none"></div>
                 {% endif %}
             </div>
             {% if is_owner_user %}
@@ -115,16 +118,17 @@
                 id="estoy_enojado_content"
                 data-type="user">
                 <p 
-                    class="border border-warning rounded view-mode mb-3 p-3" 
+                    class="tema-importante rounded view-mode mb-3 p-3" 
                     aria-labelledby="estoy_enojado"
                     style="white-space: pre-wrap;"
                 >{{ user.anger_detection_cues or ""}}</p>
                 {% if is_owner_user %}
                 <textarea 
-                    class="form-control border border-warning rounded autosize edit-mode d-none mb-3 p-3" 
+                    class="form-control tema-importante rounded autosize edit-mode d-none mb-3 p-3" 
                     name="anger_detection_cues"
                     placeholder="Escriba aquí..."
                     aria-labelledby="estoy_enojado"></textarea>
+                <div class="invalid-feedback edit-mode d-none"></div>
                 {% endif %}
             </div>
             {% if is_owner_user %}
@@ -140,17 +144,18 @@
                 id="como_comunicarse_content"
                 data-type="user">
                 <p 
-                    class="border border-warning rounded view-mode mb-3 p-3" 
+                    class="tema-importante rounded view-mode mb-3 p-3" 
                     aria-labelledby="como_comunicarse"
                     style="white-space: pre-wrap;"
                 >{{ user.communication_instructions or ""}}</p>
                 {% if is_owner_user %}
                 <textarea 
-                    class="form-control border border-warning rounded autosize edit-mode d-none mb-3 p-3" 
+                    class="form-control tema-importante rounded autosize edit-mode d-none mb-3 p-3" 
                     name="communication_instructions"
                     placeholder="Escriba aquí..."
                     aria-labelledby="como_comunicarse"
                     aria-describedby="como_comunicarse_desc"></textarea>
+                <div class="invalid-feedback edit-mode d-none"></div>
                 {% endif %}
             </div>
             {% if is_owner_user %}
@@ -166,17 +171,18 @@
                 id="movilidad_content"
                 data-type="user">
                 <p 
-                    class="border border-warning rounded view-mode mb-3 p-3" 
+                    class="tema-importante rounded view-mode mb-3 p-3" 
                     aria-labelledby="movilidad"
                     style="white-space: pre-wrap;"
                 >{{ user.mobility or ""}}</p>
                 {% if is_owner_user %}
                 <textarea 
-                    class="form-control border border-warning rounded autosize edit-mode d-none mb-3 p-3" 
+                    class="form-control tema-importante rounded autosize edit-mode d-none mb-3 p-3" 
                     name="mobility"
                     placeholder="Escriba aquí..."
                     aria-labelledby="movilidad"
                     aria-describedby="movilidad_desc"></textarea>
+                <div class="invalid-feedback edit-mode d-none"></div>
                 {% endif %}
             </div>
             {% if is_owner_user %}
@@ -191,17 +197,18 @@
                 id="cuidad_personal_content"
                 data-type="user">
                 <p 
-                    class="border border-warning rounded view-mode mb-3 p-3" 
+                    class="tema-importante rounded view-mode mb-3 p-3" 
                     aria-labelledby="cuidad_personal"
                     style="white-space: pre-wrap;"
                 >{{ user.personal_care or ""}}</p>
                 {% if is_owner_user %}
                 <textarea 
-                    class="form-control border border-warning rounded autosize edit-mode d-none mb-3 p-3" 
+                    class="form-control tema-importante rounded autosize edit-mode d-none mb-3 p-3" 
                     name="personal_care"
                     placeholder="Escriba aquí..."
                     aria-labelledby="cuidad_personal"
                     aria-describedby="cuidad_personal_desc"></textarea>
+                <div class="invalid-feedback edit-mode d-none"></div>
                 {% endif %}
             </div>
             {% if is_owner_user %}
@@ -217,17 +224,18 @@
                 id="vista_oido_content"
                 data-type="user">
                 <p 
-                    class="border border-warning rounded view-mode mb-3 p-3" 
+                    class="tema-importante rounded view-mode mb-3 p-3" 
                     aria-labelledby="vista_oido"
                     style="white-space: pre-wrap;"
                 >{{ user.vision_hearing or ""}}</p>
                 {% if is_owner_user %}
                 <textarea 
-                    class="form-control border border-warning rounded autosize edit-mode d-none mb-3 p-3" 
+                    class="form-control tema-importante rounded autosize edit-mode d-none mb-3 p-3" 
                     name="vision_hearing"
                     placeholder="Escriba aquí..."
                     aria-labelledby="vista_oido"
                     aria-describedby="vista_oido_desc"></textarea>
+                <div class="invalid-feedback edit-mode d-none"></div>
                 {% endif %}
             </div>
             {% if is_owner_user %}
@@ -243,17 +251,18 @@
                 id="como_como_content"
                 data-type="user">
                 <p 
-                    class="border border-warning rounded view-mode mb-3 p-3" 
+                    class="tema-importante rounded view-mode mb-3 p-3" 
                     aria-labelledby="como_como"
                     style="white-space: pre-wrap;"
                 >{{ user.eating_instructions or ""}}</p>
                 {% if is_owner_user %}
                 <textarea 
-                    class="form-control border border-warning rounded autosize edit-mode d-none mb-3 p-3" 
+                    class="form-control tema-importante rounded autosize edit-mode d-none mb-3 p-3" 
                     name="eating_instructions"
                     placeholder="Escriba aquí..."
                     aria-labelledby="como_como"
                     aria-describedby="como_como_desc"></textarea>
+                <div class="invalid-feedback edit-mode d-none"></div>
                 {% endif %}
             </div>
             {% if is_owner_user %}
@@ -269,17 +278,18 @@
                 id="como_bebo_content"
                 data-type="user">
                 <p 
-                    class="border border-warning rounded view-mode mb-3 p-3" 
+                    class="tema-importante rounded view-mode mb-3 p-3" 
                     aria-labelledby="como_bebo"
                     style="white-space: pre-wrap;"
                 >{{ user.drinking_instructions or ""}}</p>
                 {% if is_owner_user %}
                 <textarea 
-                    class="form-control border border-warning rounded autosize edit-mode d-none mb-3 p-3" 
+                    class="form-control tema-importante rounded autosize edit-mode d-none mb-3 p-3" 
                     name="drinking_instructions"
                     placeholder="Escriba aquí..."
                     aria-labelledby="como_bebo"
                     aria-describedby="como_bebo_desc"></textarea>
+                <div class="invalid-feedback edit-mode d-none"></div>
                 {% endif %}
             </div>
             {% if is_owner_user %}
@@ -295,17 +305,18 @@
                 id="seguridad_content"
                 data-type="user">
                 <p 
-                    class="border border-warning rounded view-mode mb-3 p-3" 
+                    class="tema-importante rounded view-mode mb-3 p-3" 
                     aria-labelledby="seguridad"
                     style="white-space: pre-wrap;"
                 >{{ user.safety_measures or ""}}</p>
                 {% if is_owner_user %}
                 <textarea 
-                    class="form-control border border-warning rounded autosize edit-mode d-none mb-3 p-3" 
+                    class="form-control tema-importante rounded autosize edit-mode d-none mb-3 p-3" 
                     name="safety_measures"
                     placeholder="Escriba aquí..."
                     aria-labelledby="seguridad"
                     aria-describedby="seguridad_desc"></textarea>
+                <div class="invalid-feedback edit-mode d-none"></div>
                 {% endif %}
             </div>
             {% if is_owner_user %}
@@ -321,17 +332,18 @@
                 id="baño_content"
                 data-type="user">
                 <p 
-                    class="border border-warning rounded view-mode mb-3 p-3" 
+                    class="tema-importante rounded view-mode mb-3 p-3" 
                     aria-labelledby="baño"
                     style="white-space: pre-wrap;"
                 >{{ user.toileting or ""}}</p>
                 {% if is_owner_user %}
                 <textarea 
-                    class="form-control border border-warning rounded autosize edit-mode d-none mb-3 p-3" 
+                    class="form-control tema-importante rounded autosize edit-mode d-none mb-3 p-3" 
                     name="toileting"
                     placeholder="Escriba aquí..."
                     aria-labelledby="baño"
                     aria-describedby="baño_desc"></textarea>
+                <div class="invalid-feedback edit-mode d-none"></div>
                 {% endif %}
             </div>
             {% if is_owner_user %}
@@ -347,17 +359,18 @@
                 id="descanso_content"
                 data-type="user">
                 <p 
-                    class="border border-warning rounded view-mode mb-3 p-3" 
+                    class="tema-importante rounded view-mode mb-3 p-3" 
                     aria-labelledby="descanso"
                     style="white-space: pre-wrap;"
                 >{{ user.sleep_rest_routine or ""}}</p>
                 {% if is_owner_user %}
                 <textarea 
-                    class="form-control border border-warning rounded autosize edit-mode d-none mb-3 p-3" 
+                    class="form-control tema-importante rounded autosize edit-mode d-none mb-3 p-3" 
                     name="sleep_rest_routine"
                     placeholder="Escriba aquí..."
                     aria-labelledby="descanso"
                     aria-describedby="descanso_desc"></textarea>
+                <div class="invalid-feedback edit-mode d-none"></div>
                 {% endif %}
             </div>
             {% if is_owner_user %}

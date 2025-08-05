@@ -103,6 +103,9 @@ document.addEventListener("DOMContentLoaded", function () {
                     editElem.style.height = '0px';
                     editElem.style.height = editElem.scrollHeight + 'px';
                 }
+                if (editElem.classList.contains('is-invalid')){
+                    clearFieldError(editElem);
+                }
             }
         });
     }
@@ -189,9 +192,19 @@ document.addEventListener("DOMContentLoaded", function () {
         if (response.success) {
             updateViewModeData(targetId)
             toggleEditMode(targetId, false)
-            alert("Se guardaron los cambios exitosamente")
+            showToast("Se guardaron los cambios exitosamente", "success")
         } else {
-            alert(response.error?.message || "Ocurrió un error inesperado.");
+            switch(response.error.type) {
+                case "FormValidationError":
+                    applyFieldErrors(content, response.error.data);
+                    showToast(response.error.message + " Por favor, revisa los campos marcados.", "error");
+                    break;
+                case "LimitError":
+                    showToast(response.error.message, "warning");
+                    break;
+                default:
+                    showToast("No se pudo realizar los cambios. Intenta más tarde.", "error");
+                }
         }
     }
 
@@ -226,7 +239,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const template = document.getElementById(templateId);
         
         if (container.querySelector('.list-item.editing')){
-            alert("Por favor, guarda o cancela el elemento en edición antes de agregar uno nuevo.");
+            showToast("Por favor, guarda o cancela el elemento en edición antes de agregar uno nuevo.", "warning")
             return;
         }
 
@@ -302,10 +315,19 @@ document.addEventListener("DOMContentLoaded", function () {
             if (editBtns) {
                 editBtns.classList.remove('d-none');
             }  
-            
-            alert("Se creó el nuevo elemento exitosamente")
+            showToast("Se creó el nuevo elemento exitosamente.", "success")
         } else {
-            alert(response.error?.message || "Ocurrió un error inesperado.");
+            switch(response.error.type) {
+                case "FormValidationError":
+                    applyFieldErrors(content, response.error.data);
+                    showToast(response.error.message + " Por favor, revisa los campos marcados.", "error");
+                    break;
+                case "LimitError":
+                    showToast(response.error.message, "warning");
+                    break;
+                default:
+                    showToast("No se pudo crear el nuevo elemento. Intenta más tarde.", "error");
+                }
         }
     }
 
@@ -372,10 +394,96 @@ document.addEventListener("DOMContentLoaded", function () {
                 
                 updateIndex(item, correctIndex);
             });
-
-            alert("Se eliminó elemento exitosamente")
+            showToast("Se eliminó el elemento exitosamente.", "success")
         } else {
-            alert(response.error?.message || "Ocurrió un error inesperado.");
+            switch(response.error.type) {
+                case "FormValidationError":
+                    applyFieldErrors(content, response.error.data);
+                    showToast(response.error.message + " Por favor, revisa los campos marcados.", "error");
+                    break;
+                case "LimitError":
+                    showToast(response.error.message, "warning");
+                    break;
+                default:
+                    showToast("No se pudo eliminar el elemento. Intenta más tarde.", "error");
+                }
         }
+    }
+
+    function applyFieldErrors(container, fieldErrors) {
+        const inputs = container.querySelectorAll("input, textarea, select");
+
+        inputs.forEach(input => {
+            const fieldName = input.name;
+            const errorMessages = fieldErrors[fieldName];
+
+            const feedback = input.nextElementSibling; // div que le sigue al input
+
+            // limpieza del estado anterior
+            input.classList.remove("is-invalid");
+            input.removeAttribute("aria-invalid");
+
+            if (!input.dataset.originalDescribedby) {
+                input.dataset.originalDescribedby = input.getAttribute("aria-describedby") || "";
+            }
+
+            let originalDescribedby = input.dataset.originalDescribedby.trim();
+            input.setAttribute("aria-describedby", originalDescribedby || "");
+
+
+            if (feedback && feedback.classList.contains("invalid-feedback")) {
+                feedback.textContent = "";
+            }
+
+            if (errorMessages && errorMessages.length > 0) {
+                input.classList.add("is-invalid");
+                input.setAttribute("aria-invalid", "true");
+
+                if (feedback && feedback.classList.contains("invalid-feedback")) {
+                    if (!feedback.id) {
+                        feedback.id = `error-${fieldName}`;
+                    }
+                    feedback.textContent = errorMessages.join(" ");
+
+                    let describedbyIds = originalDescribedby ? originalDescribedby.split(/\s+/) : [];
+                    if (!describedbyIds.includes(feedback.id)) {
+                        describedbyIds.push(feedback.id);
+                    }
+                    input.setAttribute("aria-describedby", describedbyIds.join(" "));
+                }
+
+                // listeners para limpiar error si el usuario edita
+                const clearError = () => {
+                    clearFieldError(input);
+                };
+                input.addEventListener("input", clearError);
+                input.addEventListener("change", clearError);
+            }
+        });
+
+        // enfocar primer campo con error
+        const firstInvalid = container.querySelector(".is-invalid");
+        if (firstInvalid) firstInvalid.focus();
+    }
+
+    function clearFieldError(input) {
+        const feedback = input.nextElementSibling;
+
+        input.classList.remove("is-invalid");
+        input.removeAttribute("aria-invalid");
+        
+        const originalDescribedby = input.dataset.originalDescribedby.trim();
+        if (originalDescribedby) {
+            input.setAttribute("aria-describedby", originalDescribedby);
+        } else {
+            input.removeAttribute("aria-describedby");
+        }
+
+        if (feedback && feedback.classList.contains("invalid-feedback")) {
+            feedback.textContent = "";
+        }
+
+        input.removeEventListener("input", clearFieldError);
+        input.removeEventListener("change", clearFieldError);
     }
 });

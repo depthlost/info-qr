@@ -10,6 +10,7 @@
             aria-labelledby="label_contacto_nombre"
             name="name"
             value="{{ contact.name or '' }}">
+        <div class="invalid-feedback edit-mode d-none"></div>
         {% endif %}
     </dd>
 
@@ -24,6 +25,7 @@
             aria-labelledby="label_contacto_relacion"
             name="relation" 
             value="{{ contact.relation or '' }}">
+        <div class="invalid-feedback edit-mode d-none"></div>
         {% endif %}
     </dd>
     {% endif %}
@@ -38,6 +40,7 @@
             aria-labelledby="label_contacto_direccion"
             name="address"
             value="{{ contact.address or '' }}">
+        <div class="invalid-feedback edit-mode d-none"></div>
         {% endif %}
     </dd>
 
@@ -51,6 +54,7 @@
             aria-labelledby="label_contacto_telefono"
             name="phone"
             value="{{ contact.phone or '' }}">
+        <div class="invalid-feedback edit-mode d-none"></div>
         {% endif %}
     </dd>
 </dl>
