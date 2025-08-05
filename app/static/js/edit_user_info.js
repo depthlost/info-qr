@@ -319,7 +319,7 @@ document.addEventListener("DOMContentLoaded", function () {
         } else {
             switch(response.error.type) {
                 case "FormValidationError":
-                    applyFieldErrors(content, response.error.data);
+                    applyFieldErrors(editingElementContent, response.error.data);
                     showToast(response.error.message + " Por favor, revisa los campos marcados.", "error");
                     break;
                 case "LimitError":
