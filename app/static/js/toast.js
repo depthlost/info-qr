@@ -25,7 +25,7 @@ function showToast(message, type, delay = 5000) {
     const category = toastCategories[type] || toastCategories.info
 
     const toastHtml = `
-    <div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="toast" style="background-color: var(--bs-body-bg)" role="alert" aria-live="assertive" aria-atomic="true">
         <div class="toast-header">
         <i class="${category.iconClass} ${category.colorClass} me-2"></i>
         <strong class="me-auto">${category.title}</strong>
