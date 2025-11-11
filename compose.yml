@@ -1,0 +1,46 @@
+services:
+  database:
+    image: postgres:18.0-alpine
+    container_name: infoqr-database
+    restart: unless-stopped
+    shm_size: 128mb
+    environment:
+      POSTGRES_USER: infoqr
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: infoqr
+    volumes:
+      - ./instance/postgres:/var/lib/postgresql
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+  
+  app:
+    build: .
+    container_name: infoqr
+    restart: unless-stopped
+    environment:
+      environment: production
+      secret_key: a0c58bc829f48c58ba71f1b4c2790fe7aa63ee5a9901dd949f0a17f28210474b
+      base_url: http://localhost:5000
+      database_schema: postgresql+psycopg2
+      database_user: infoqr
+      database_password: password
+      database_host: database
+      database_port: 5432
+      database_name: infoqr
+      PYTHONPYCACHEPREFIX: /tmp/pycache
+    volumes:
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+    ports:
+      - 5000:8000
+    depends_on:
+      - database
+    user: nobody:nogroup
+    read_only: true
+    tmpfs:
+      - /tmp
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    
